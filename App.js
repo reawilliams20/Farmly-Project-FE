@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MessagesScreen from './screens/MessagesScreen';
 import FarmsScreen from './screens/FarmsScreen';
 import FarmScreen from './screens/FarmScreen';
+import LoginScreen from './screens/LoginScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -19,17 +20,30 @@ function FarmStackScreen() {
   );
 }
 
+const LoginStack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>  
-       <Tab.Navigator>
-       <Tab.Screen name= 'farm' component={FarmStackScreen} />
-       <Tab.Screen name= 'Messages' component={MessagesScreen} />
-      </Tab.Navigator>
+      <LoginStack.Navigator>
+        <LoginStack.Screen name="LoginScreen" component={LoginScreen}/>
+      </LoginStack.Navigator>
     </ NavigationContainer>  
   );
 }
+
+
+
+// export default function App() {
+//   return (
+//     <NavigationContainer>  
+//        <Tab.Navigator>
+//        <Tab.Screen name= 'farm' component={FarmStackScreen} />
+//        <Tab.Screen name= 'Messages' component={MessagesScreen} />
+//       </Tab.Navigator>
+//     </ NavigationContainer>  
+//   );
+// }
 
 // const styles = StyleSheet.create({
 //   container: {
