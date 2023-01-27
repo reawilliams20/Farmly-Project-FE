@@ -22,12 +22,10 @@ const LoginScreen = ({navigation}) =>{
    const handleLogin = (e)=>{
     e.preventDefault()
   
-
-
     const validUser = users.filter((user)=>{
         if(user.username===currUsername&&user.password===currPassword){
-           setUser(user)
-           return user
+            setUser(user)
+            return user
         }
     })
 
@@ -58,7 +56,7 @@ const LoginScreen = ({navigation}) =>{
             <TextInput
             placeholder="Enter your password"
             onBlur={(password)=> currPassword = password.target.value }
-            secureTextEntry
+            //secureTextEntry
             />
             <Button 
             title = "Login"

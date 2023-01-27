@@ -7,10 +7,10 @@ export const UserContext = createContext();
 export const UserProvider= ({children}) =>{
     const [user,setUser] = useState({})
 
-    useEffect(() => {
-    const data = window.localStorage.getItem('MY_APP_STATE');
-    if ( data !== null ) setUser(JSON.parse(data));
-}, []);
+//     useEffect(() => {
+//     const data = window.localStorage.getItem('MY_APP_STATE');
+//     if ( data !== null ) setUser(JSON.parse(data));
+// }, []);
 
     const isLoggedIn = user==null;
 
