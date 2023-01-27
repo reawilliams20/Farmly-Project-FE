@@ -1,20 +1,21 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button } from "react-native-elements";
+import LoginScreen from "./LoginScreen";
 
-const MessagesScreen = ({navigation}) =>{
+const SettingScreen = ({navigation}) =>{
     return (
         <View style={styles.container}>
-            <Text>Messages</Text>
+            {/* <Text>Sign Out</Text> */}
             <Button
-            title = "Users"
-            onPress={()=>alert('button clicked')}
+            title = "Sign Out"
+            onPress={()=>navigation.navigate(LoginScreen)}
             />
         </View>
     )
 }
 
-export default MessagesScreen
+export default SettingScreen
 
 const styles= StyleSheet.create({
     container:{
