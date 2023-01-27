@@ -6,7 +6,7 @@ import MessagesScreen from './screens/MessagesScreen';
 import FarmsScreen from './screens/FarmsScreen';
 import FarmScreen from './screens/FarmScreen';
 import LoginScreen from './screens/LoginScreen';
-
+import { UserProvider } from './user';
 
 const Tab = createBottomTabNavigator();
 const FarmStack = createNativeStackNavigator();
@@ -24,11 +24,14 @@ const LoginStack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>  
+    <UserProvider>
+      <NavigationContainer>  
       <LoginStack.Navigator>
         <LoginStack.Screen name="LoginScreen" component={LoginScreen}/>
       </LoginStack.Navigator>
     </ NavigationContainer>  
+    </UserProvider>
+  
   );
 }
 

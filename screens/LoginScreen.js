@@ -1,22 +1,54 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, Input } from "react-native";
+import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
 import { getUser, getUsers } from "../utils/api";
+import { useContext } from 'react';
+import { UserContext } from "../user";
 
 const LoginScreen = ({navigation}) =>{
     const [users, setUsers] = useState([])
+    const [username, setUsername] = useState('')
+    const [password, setPassword] = useState('')
+    const userValue = useContext(UserContext)
+    console.log(userValue)
+    let currUsername = ""
+    let currPassword = ""
 
     useEffect(() => {
         getUsers()
         .then((res) => {
-            console.log(res)
             setUsers(res)
         })
+    }, [])
+  
+   const handleLogin = (e)=>{
+    e.preventDefault()
+    setUsername(currUsername)
+    setPassword(currPassword)
+    users.map((user)=>{
+        if(user.username===username&&user.password===password){
+            useContext
+        }
+        
     })
+   }
 
     return (
         <View style={styles.container}>
             <Text>Login</Text>
+            <TextInput 
+            placeholder="Enter your email"
+            onBlur={(email)=> currUsername = email.target.value }
+            />
+            <TextInput
+            placeholder="Enter your password"
+            onBlur={(password)=> currPassword = password.target.value }
+            />
+            <Button 
+            title = "Login"
+            onPress={handleLogin}
+            style = {styles.button}
+            />
             {/* <Input 
                 placeholder="Enter your email" 
                 label="Email"
@@ -53,6 +85,9 @@ const styles= StyleSheet.create({
         flex:1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#8fcbbc'
-    }
+    },
+    button: {
+        width: 370,
+        marginTop: 10,
+      },
 })
