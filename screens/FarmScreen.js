@@ -1,13 +1,14 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
-// import { Button } from "react-native-elements";
+import { View, Text, StyleSheet } from "react-native";
+import { Button } from "react-native-elements";
 
-const FarmScreen = ({navigation, route}) =>{
-    console.log('in farmScreen')
+const FarmScreen = ({ navigation: { goBack } }) =>{
     return (
         <View style={styles.container}>
+             <Button onPress={() => goBack()} title="Go back from ProfileScreen" />
             <Text>Test</Text>
         </View>
+
     )
 }
 

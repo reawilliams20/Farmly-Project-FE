@@ -1,30 +1,27 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
-import { Button, Card } from "react-native-elements";
+import { Card } from "react-native-elements";
 import axios from "axios";
-import FarmScreen from "./FarmScreen";
+import { getFarms } from "../utils/api";
 
-const FarmsScreen = ({}) => {
+const FarmsScreen = ({navigation}) => {
   const [farms, setFarms] = useState([]);
-  const fetchAPi = async () => {
-    let res = await axios.get("https://farmly.onrender.com/api/farms");
-    console.log(res.data);
-    setFarms(res.data);
-  };
 
   useEffect(() => {
-    fetchAPi();
+    getFarms()
+    .then((response)=>{
+      setFarms(response)
+    })
   }, []);
 
   return (
     <View style={styles.container}>
-      <Text>Farms Screen</Text>
       <FlatList
         data={farms}
         renderItem={({ item }) => {
           return (
             <Card>
-              <Text onPress={()=> navigation.navigate("FarmScreen")}>
+              <Text onPress={()=> navigation.navigate('FarmScreen')}>
                 {item.name}
               </Text>
             </Card>
