@@ -19,11 +19,10 @@ const LoginScreen = ({navigation}) =>{
         })
     }, [])
   
-   const handleLogin = (e)=>{
-    e.preventDefault()
+   const handleLogin = (username, password)=>{
   
     const validUser = users.filter((user)=>{
-        if(user.username===currUsername&&user.password===currPassword){
+        if(user.username===username&&user.password===password){
             setUser(user)
             return user
         }
@@ -51,16 +50,16 @@ const LoginScreen = ({navigation}) =>{
             <Text>Login</Text>
             <TextInput 
             placeholder="Enter your email"
-            onBlur={(email)=> currUsername = email.target.value }
+            onChangeText={username=> currUsername=username}
             />
             <TextInput
             placeholder="Enter your password"
-            onBlur={(password)=> currPassword = password.target.value }
+            onChangeText={password=> currPassword=password }
             //secureTextEntry
             />
             <Button 
             title = "Login"
-            onPress={handleLogin}
+            onPress={() => {handleLogin(currUsername, currPassword)}}
             style = {styles.button}
             />
         </View>
