@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Card } from "react-native-elements";
-import axios from "axios";
 import { getFarms } from "../utils/api";
 
 const FarmsScreen = ({navigation}) => {

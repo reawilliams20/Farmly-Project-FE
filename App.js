@@ -2,57 +2,50 @@ import { StyleSheet} from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MessagesScreen from './screens/MessagesScreen';
 import FarmsScreen from './screens/FarmsScreen';
 import FarmScreen from './screens/FarmScreen';
 import LoginScreen from './screens/LoginScreen';
 import { UserProvider } from './user';
+import MessagesScreen from './screens/MessagesScreen';
 
 const Tab = createBottomTabNavigator();
-const FarmStack = createNativeStackNavigator();
 
-function FarmStackScreen() {
+
+function FarmsTab() {
   return (
-    <FarmStack.Navigator screenOptions={{ headerShown: false }}>
-      <FarmStack.Screen name="FarmsScreen" component={FarmsScreen} />
-      <FarmStack.Screen name="FarmScreen" component={FarmScreen} />
-    </FarmStack.Navigator>
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen name="Farms" component={FarmsScreen} />
+      <Tab.Screen name="Messages" component={MessagesScreen} />
+    </Tab.Navigator>
   );
 }
 
-const LoginStack = createNativeStackNavigator();
+const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
     <UserProvider>
       <NavigationContainer>  
-      <LoginStack.Navigator>
-        <LoginStack.Screen name="LoginScreen" component={LoginScreen}/>
-      </LoginStack.Navigator>
+      <Stack.Navigator>
+        <Stack.Screen name="LoginScreen" component={LoginScreen}/>
+        <Stack.Screen name="FarmsScreen" options={{ title: "Home" }} component={FarmsTab}/>
+        <Stack.Screen name="FarmScreen" options={{ title: "Individual Farm" }} component={FarmScreen} />
+      </Stack.Navigator>
     </ NavigationContainer>  
     </UserProvider>
   
   );
 }
 
+export { FarmsTab }
 
 
-// export default function App() {
-//   return (
-//     <NavigationContainer>  
-//        <Tab.Navigator>
-//        <Tab.Screen name= 'farm' component={FarmStackScreen} />
-//        <Tab.Screen name= 'Messages' component={MessagesScreen} />
-//       </Tab.Navigator>
-//     </ NavigationContainer>  
-//   );
-// }
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff',
-//     alignItems: 'center',
-//     justifyContent: 'center',
-//   },
-// });
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

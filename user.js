@@ -12,7 +12,7 @@ export const UserProvider= ({children}) =>{
     if ( data !== null ) setUser(JSON.parse(data));
 }, []);
 
-    const isLoggedIn = user!==null;
+    const isLoggedIn = user==null;
 
 
 return (

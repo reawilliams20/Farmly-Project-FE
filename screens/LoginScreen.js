@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TextInput } from "react-native";
 import { Button } from "react-native-elements";
-import { getUser, getUsers } from "../utils/api";
+import { getUsers } from "../utils/api";
 import { useContext } from 'react';
 import { UserContext } from "../user";
 
+
 const LoginScreen = ({navigation}) =>{
     const [users, setUsers] = useState([])
-    const [username, setUsername] = useState('')
-    const [password, setPassword] = useState('')
-    const userValue = useContext(UserContext)
-    console.log(userValue)
+
+    let {setUser} = useContext(UserContext)
+  
     let currUsername = ""
     let currPassword = ""
 
@@ -23,14 +23,26 @@ const LoginScreen = ({navigation}) =>{
   
    const handleLogin = (e)=>{
     e.preventDefault()
-    setUsername(currUsername)
-    setPassword(currPassword)
-    users.map((user)=>{
-        if(user.username===username&&user.password===password){
-            useContext
+  
+
+
+    const validUser = users.filter((user)=>{
+        if(user.username===currUsername&&user.password===currPassword){
+           setUser(user)
+           return user
         }
-        
     })
+    console.log(validUser,"42")
+        if(validUser.length===0){
+            return alert("check again")
+            
+        }
+
+        if(validUser.length>0){
+            return (
+                navigation.navigate("FarmsScreen")
+                );
+        }
    }
 
     return (
@@ -43,37 +55,13 @@ const LoginScreen = ({navigation}) =>{
             <TextInput
             placeholder="Enter your password"
             onBlur={(password)=> currPassword = password.target.value }
+            secureTextEntry
             />
             <Button 
             title = "Login"
             onPress={handleLogin}
             style = {styles.button}
             />
-            {/* <Input 
-                placeholder="Enter your email" 
-                label="Email"
-                leftIcon={{ type: "material", name: "email" }}
-                //value={email}
-                //onChangeText={(text) => setEmail(text)}
-            />
-            <Input
-                placeholder="Enter your password"
-                label="Password"
-                leftIcon={{ type: "material", name: "lock" }}
-                //value={password}
-                //onChangeText={(text) => setPassword(text)}
-                secureTextEntry
-            />
-            <Button 
-                title="sign in" 
-                onPress={()=>signin(email,password)} 
-                style={styles.button} 
-            />
-            {/* <Button
-                title="register"
-                onPress={() => navigation.navigate("Register")}
-                style={styles.button}
-            /> */}
         </View>
     )
 }
