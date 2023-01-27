@@ -11,6 +11,13 @@
     })
   };
 
+  export const getProduce = () =>{
+    return farmlyApi.get('/produce')
+    .then((response)=>{
+      return response.data
+    })
+  }
+
   export const getUsers = () => {
     return farmlyApi.get("/users")
     .then((res) => {

@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Card } from "react-native-elements";
-import { getFarms } from "../utils/api";
+import { getFarms } from "../../utils/api";
 
-const FarmsScreen = ({navigation}) => {
+const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
 
   useEffect(() => {
-    getFarms()
-    .then((response)=>{
-      setFarms(response)
-    })
+    getFarms().then((response) => {
+      setFarms(response);
+    });
   }, []);
 
   return (
@@ -20,7 +19,7 @@ const FarmsScreen = ({navigation}) => {
         renderItem={({ item }) => {
           return (
             <Card>
-              <Text onPress={()=> navigation.navigate('FarmScreen')}>
+              <Text onPress={() => navigation.navigate("SingleFarm")}>
                 {item.name}
               </Text>
             </Card>
@@ -31,7 +30,7 @@ const FarmsScreen = ({navigation}) => {
   );
 };
 
-export default FarmsScreen;
+export default FarmList;
 
 const styles = StyleSheet.create({
   container: {

@@ -1,16 +1,15 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 
-const FarmScreen = () =>{
+const MyFarm = ({navigation}) =>{
     return (
         <View style={styles.container}>
-            <Text>Test</Text>
+            <Text>My Farm</Text>
         </View>
-
     )
 }
 
-export default FarmScreen
+export default MyFarm
 
 const styles= StyleSheet.create({
     container:{

@@ -8,9 +8,7 @@ import { UserContext } from "../user";
 
 const LoginScreen = ({navigation}) =>{
     const [users, setUsers] = useState([])
-
     let {setUser} = useContext(UserContext)
-  
     let currUsername = ""
     let currPassword = ""
 
@@ -32,16 +30,21 @@ const LoginScreen = ({navigation}) =>{
            return user
         }
     })
-    console.log(validUser,"42")
+
         if(validUser.length===0){
             return alert("check again")
             
         }
-
         if(validUser.length>0){
-            return (
-                navigation.navigate("FarmsScreen")
+            if(validUser[0].type==="User"){
+                return (
+                navigation.navigate("FarmList")
                 );
+            }else{
+                return(
+                navigation.navigate("ProduceList")
+                )
+            }          
         }
    }
 
