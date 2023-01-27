@@ -1,21 +1,32 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet} from 'react-native';
 import {createStackNavigator} from '@react-navigation/stack'
 import {NavigationContainer} from '@react-navigation/native';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-
-import LoginScreen from './screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import MessagesScreen from './screens/MessagesScreen';
 import FarmsScreen from './screens/FarmsScreen';
-import SignUpScreen from './screens/SignupScreen';
+import FarmScreen from './screens/FarmScreen';
+
+
+const FarmStack = createNativeStackNavigator();
+
+function FarmStackScreen() {
+  return (
+    <FarmStack.Navigator>
+      <FarmStack.Screen name="FarmsScreen" component={FarmsScreen} />
+      <FarmStack.Screen name="FarmScreen" component={FarmScreen} />
+    </FarmStack.Navigator>
+  );
+}
+
+
 const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>  
        <Tab.Navigator>
-       <Tab.Screen name= 'Farm List' component={FarmsScreen} />
+       <Tab.Screen name= 'Farm List' component={FarmStackScreen} />
        <Tab.Screen name= 'Messages' component={MessagesScreen} />
       </Tab.Navigator>
     </ NavigationContainer>  

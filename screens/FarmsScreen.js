@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button, Card } from "react-native-elements";
 import axios from "axios";
+import FarmScreen from "./FarmScreen";
 
 const FarmsScreen = ({}) => {
   const [farms, setFarms] = useState([]);
@@ -23,7 +24,9 @@ const FarmsScreen = ({}) => {
         renderItem={({ item }) => {
           return (
             <Card>
-              <Text>{item.name}</Text>
+              <Text onPress={()=> navigation.navigate("FarmScreen")}>
+                {item.name}
+              </Text>
             </Card>
           );
         }}
