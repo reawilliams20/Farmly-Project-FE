@@ -1,15 +1,29 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button } from "react-native-elements";
-import LoginScreen from "./LoginScreen";
+import { signOut } from "firebase/auth";
+import { auth, db } from "../firebase";
+import { UserContext } from "../navigation/user";
+
 
 const SettingScreen = ({navigation}) =>{
+    let { isLoggedIn }= useContext(UserContext)
+    const signOutNow = () => {
+        signOut(auth)
+          .then(() => {
+            isLoggedIn = false
+            navigation.replace("LoginScreen");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      };
+
     return (
         <View style={styles.container}>
-            {/* <Text>Sign Out</Text> */}
             <Button
             title = "Sign Out"
-            onPress={()=>navigation.navigate(LoginScreen)}
+            onPress={signOutNow}
             />
         </View>
     )
