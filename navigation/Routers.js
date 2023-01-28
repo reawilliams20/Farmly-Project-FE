@@ -1,6 +1,7 @@
 import React, { useContext, useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
+import {auth} from "../firebase"
 import { onAuthStateChanged } from "firebase/auth";
 import { UserContext } from "./user";
 import AuthStack from "./AuthStack";
@@ -9,16 +10,15 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 const Routes = () => {
+  const {type, setType} = useContext(UserContext)
   const { user, setUser } = useContext(UserContext);
-  const auth = getAuth();
-  const currentUser = auth.currentUser
   useEffect(() => {
-    onAuthStateChanged(auth, (user) => {
+    auth.onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
-  console.log(currentUser, "current user")
-  console.log(user, "in the Routers");
+  
+  console.log(type, "type in the Routers");
   return (
     <NavigationContainer>
       {user ? <AppStack /> : <AuthStack />}

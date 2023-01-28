@@ -82,7 +82,7 @@ const LoginScreen = ({ navigation }) => {
         <Button
           title="Login"
         //   onPress={() => {handleLogin(currUsername, currPassword)}}
-          onPress={() => signin(email, password) }
+          onPress={()=> signin(email, password) }
           style={styles.buttonText}
         />
         <TouchableOpacity

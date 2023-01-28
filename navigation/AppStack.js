@@ -60,62 +60,6 @@ function FarmsTab() {
   );
 }
 
-// function ProduceTab() {
-//   return (
-//     <Tab.Navigator screenOptions={{ headerShown: false }}>
-//       <Tab.Screen
-//         name="MyFarm"
-//         component={MyFarm}
-//         options={({ route }) => ({
-//           // tabBarLabel: 'Home',
-//           tabBarIcon: ({ color, size }) => (
-//             <MaterialCommunityIcons
-//               name="home-outline"
-//               color={color}
-//               size={size}
-//             />
-//           ),
-//         })}
-//       />
-//       <Tab.Screen
-//         name="ProduceList"
-//         component={ProduceList}
-//         options={{
-//           tabBarIcon: ({ color, size }) => (
-//             <MaterialCommunityIcons
-//               name="food-apple"
-//               color={color}
-//               size={size}
-//             />
-//           ),
-//         }}
-//       />
-//       <Tab.Screen
-//         name="Messages"
-//         component={MessagesScreen}
-//         options={{
-//           tabBarIcon: ({ color, size }) => (
-//             <Ionicons
-//               name="chatbox-ellipses-outline"
-//               color={color}
-//               size={size}
-//             />
-//           ),
-//         }}
-//       />
-//       <Tab.Screen
-//         name="Setting"
-//         component={SettingScreen}
-//         options={{
-//           tabBarIcon: ({ color, size }) => (
-//             <Ionicons name="person-outline" color={color} size={size} />
-//           ),
-//         }}
-//       />
-//     </Tab.Navigator>
-//   );
-// }
-
 const SettingStack = ({navigation}) => (
   <Stack.Navigator>
     <Stack.Screen
@@ -125,32 +69,18 @@ const SettingStack = ({navigation}) => (
         headerShown: false,
       }}
     />
-    {/* <Stack.Screen
-      name="EditProfile"
-      component={EditProfileScreen}
-      options={{
-        headerTitle: 'Edit Profile',
-        headerBackTitleVisible: false,
-        headerTitleAlign: 'center',
-        headerStyle: {
-          backgroundColor: '#fff',
-          shadowColor: '#fff',
-          elevation: 0,
-        },
-      }}
-    /> */}
   </Stack.Navigator>
 );
 
 
 const AppStack = () => {
+  
   return (
-<Tab.Navigator screenOptions={{ headerShown: false }}>
+  <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
         name="MyFarm"
         component={MyFarm}
         options={({ route }) => ({
-          // tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="home-outline"

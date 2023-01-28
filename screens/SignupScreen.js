@@ -1,20 +1,24 @@
-import React, {useState} from "react";
+import React, {useContext, useState} from "react";
 import { View, Text, StyleSheet,ScrollView } from "react-native";
 import { Button } from "react-native-elements";
 import { Input } from "react-native-elements";
-import {getAuth, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import {Picker} from "@react-native-picker/picker";
-
+import { auth } from "../firebase"
+import { UserContext } from "../navigation/user";
 
 const SignUpScreen = ({navigation}) =>{
-    const auth = getAuth()
     const [name, setName] = useState('');
+    // const [secureTextEntry, setSecureTextEntry] = useState(true);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [avatar, setAvatar] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    const [selectType, setSelectedType] = useState(''); 
+    let {type, setType} = useContext(UserContext)
+    console.log(type,19999)
     const [postcode, setPostcode] = useState('')
+    let currSelectType = ""
+    let currPostcode = ""
     const handleSignUp = ()=>{
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential)=>{
@@ -23,14 +27,23 @@ const SignUpScreen = ({navigation}) =>{
             displayName: name, 
             photoURL: avatar? avatar: "https://example.com/jane-q-user/profile.jpg",
             })
+            
         })
+        
+       .catch((error)=>{
+            alert(`Something went wrong with sign up: ${error} `);
+       })
     }
+        console.log(type,"29999")
+    if (type === "customer"){
+        navigation.navigate('FarmList')
+    }navigation.navigate('MyFarm')
+
 
 
     return (
         <ScrollView>
         <View style={styles.container}>
-            <Text>Sign Up</Text>
             <Input
                 placeholder='Enter your name'
                 label='Name'
@@ -50,8 +63,8 @@ const SignUpScreen = ({navigation}) =>{
                 label='Password'
                 value={password} 
                 onChangeText={text => setPassword(text)}
-                secureTextEntry 
-                required
+                secureTextEntry = {true}
+                password
             />
              <Input
                 placeholder='Confirm password '
@@ -72,17 +85,17 @@ const SignUpScreen = ({navigation}) =>{
                 placeholder='Enter your postcode'
                 label='Postcode'
                 value = {postcode}
-                onChangeText={text => setPostcode(text)} 
+                onChangeText={postcode => setPostcode(postcode)} 
                 required
             />
-            </View>
-
+            </View >
             <View style={styles.picker}>
-            <Text style={styles.container}>Select a type</Text>
+            <Text>Select a type</Text>
             <Picker 
             placeholder = {{label:"Select a type", value: null}}
-            selectedValue = {selectType}
-            onValueChange={(value)=> setSelectedType(value)} >
+            selectedValue = {type}
+            onValueChange={value=> setType(value)}
+            required >
             <Picker.Item label= "I am a customer"  value= "customer" />
             <Picker.Item label= "I am a farmer"  value= "farmer" />
             </Picker>
@@ -90,7 +103,7 @@ const SignUpScreen = ({navigation}) =>{
             <View>
             <Button
             title = "Register"
-            onPress={handleSignUp}
+            onPress={()=>handleSignUp(currPostcode,currSelectType)}
             />
         </View>
         </ScrollView>
@@ -111,3 +124,7 @@ const styles= StyleSheet.create({
         justifyContent:'center',
     }
 })
+
+
+// additional features -->  hide and show password + error handling for password and confirm password 
+
