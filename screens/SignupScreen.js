@@ -14,7 +14,8 @@ const SignUpScreen = ({navigation}) =>{
     const [password, setPassword] = useState('');
     const [avatar, setAvatar] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    let {type, setType} = useContext(UserContext)
+    let {type, setType, isFirstLaunch, setIsFirstLaunch} = useContext(UserContext)
+    
     console.log(type,19999)
     const [postcode, setPostcode] = useState('')
     let currSelectType = ""
@@ -23,6 +24,7 @@ const SignUpScreen = ({navigation}) =>{
         createUserWithEmailAndPassword(auth, email, password)
         .then((userCredential)=>{
             const user = userCredential.user;
+            setIsFirstLaunch(true)
             updateProfile(auth.currentUser, {
             displayName: name, 
             photoURL: avatar? avatar: "https://example.com/jane-q-user/profile.jpg",

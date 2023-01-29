@@ -7,11 +7,12 @@ import { UserContext } from "../navigation/user";
 
 
 const SettingScreen = ({navigation}) =>{
-    let { isLoggedIn }= useContext(UserContext)
+    let { isLoggedIn, type }= useContext(UserContext)
     const signOutNow = () => {
         signOut(auth)
           .then(() => {
             isLoggedIn = false
+            type = ""
             navigation.replace("LoginScreen");
           })
           .catch((error) => {

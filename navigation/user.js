@@ -9,6 +9,7 @@ export const UserProvider= ({children}) =>{
     const [user,setUser] = useState({})
     const isLoggedIn = user==null;
     const [type, setType] = useState('')
+    const [isFirstLaunch, setIsFirstLaunch] = useState(null);
 
 return (
     <UserContext.Provider 
@@ -18,9 +19,10 @@ return (
         isLoggedIn,
         type, 
         setType,
+        isFirstLaunch,
+        setIsFirstLaunch,
         signin: async (email, password) => {
         try {
-        console.log(email,password)
         await signInWithEmailAndPassword(auth, email, password);
         } catch (e) {
         window.alert("Incorrect username or password!");

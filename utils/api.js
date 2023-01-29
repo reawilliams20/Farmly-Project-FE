@@ -10,6 +10,13 @@
         return response.data
     })
   };
+  
+  export const getFarmById = (farm_id)=>{
+    return farmlyApi.get(`/farms/${farm_id}`)
+    .then((response)=>{
+      return response.data
+    })
+  };
 
   export const getProduce = () =>{
     return farmlyApi.get('/produce')

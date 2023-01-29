@@ -1,62 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { Button } from "react-native-elements";
-import { getUsers } from "../utils/api";
 import { useContext } from "react";
 import { UserContext } from "../navigation/user";
 import { Input } from "react-native-elements";
+import { getFarms } from "../utils/api";
 
 const LoginScreen = ({ navigation }) => {
-  const [users, setUsers] = useState([])
+  const [farms, setFarms] = useState([]);
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-//   let { user, setUser } = useContext(UserContext);
-//   console.log(user);
-  let { signin }= useContext(UserContext)
+  let { signin, type, setType , user, setUser, isFirstLaunch, setIsFirstLaunch }= useContext(UserContext)
 
-//   signin((email, password)=>{
-//     setEmail(email)
-//     setPassword(password)
-//   })
-//   console.log(email, password)
-
+    useEffect(() => {
+      getFarms()
+      .then((response) => {
+        setFarms(response);
+      });
+    }, []);
 
 
-//   console.log(signin)
-//   let currUsername = ""
-//   let currPassword = ""
-
-    //   useEffect(() => {
-    //       getUsers()
-    //       .then((res) => {
-    //           setUsers(res)
-    //       })
-    //   }, [])
-
-    //  const handleLogin = (username, password)=>{
-    //   const validUser = users.filter((user)=>{
-    //       if(user.username===username&&user.password===password){
-    //           setUser(user)
-    //           return user
-    //       }
-    //   })
-    //   console.log(users)
-//   if(validUser.length===0){
-//       return alert("check again")
-
-//   }
-//           if(validUser.length>0){
-//               if(validUser[0].type==="User"){
-//                   return (
-//                   navigation.navigate("FarmList")
-//                   );
-//               }else{
-//                   return(
-//                   navigation.navigate("ProduceList")
-//                   )
-//               }
-//           }
-//      }
+    const handleLogin = (username)=>{
+      const validEmail=farms.filter((farm)=>
+        farm.username.toUpperCase() == username.toUpperCase()
+        )
+      if(validEmail.length !==0){
+        setType("farmer")
+      }else{
+        setType("customer")
+      }
+  }
 
   return (
     <>
@@ -81,8 +54,7 @@ const LoginScreen = ({ navigation }) => {
       <View>
         <Button
           title="Login"
-        //   onPress={() => {handleLogin(currUsername, currPassword)}}
-          onPress={()=> signin(email, password) }
+          onPress={()=> [signin(email, password), handleLogin(email)]}
           style={styles.buttonText}
         />
         <TouchableOpacity
@@ -90,7 +62,7 @@ const LoginScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("SignupScreen")}
         >
           <Text style={styles.underline}>
-            Don't have an account yet? Register Now
+            Don't have an account? Register Now
           </Text>
         </TouchableOpacity>
       </View>

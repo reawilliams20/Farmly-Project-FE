@@ -5,23 +5,22 @@ import {auth} from "../firebase"
 import { onAuthStateChanged } from "firebase/auth";
 import { UserContext } from "./user";
 import AuthStack from "./AuthStack";
-import AppStack from "./AppStack";
+import AppStackForFarmers from "./AppStackForFarmers";
+import AppStackForCustomers from './AppStackForCustomers'
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 const Routes = () => {
-  const {type, setType} = useContext(UserContext)
-  const { user, setUser } = useContext(UserContext);
+  const { user, setUser , type, setType, isFirstLaunch, setIsFirstLaunch } = useContext(UserContext);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
   
-  console.log(type, "type in the Routers");
   return (
     <NavigationContainer>
-      {user ? <AppStack /> : <AuthStack />}
+      {user ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}
     </NavigationContainer>
   );
 };

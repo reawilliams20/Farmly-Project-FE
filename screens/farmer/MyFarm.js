@@ -10,7 +10,6 @@ const MyFarm = ({navigation}) =>{
         const displayName = user.displayName;
         const email = user.email;
         const photoURL = user.photoURL;
-        console.log(user.providerData, "15" )
     }
 
     return (
