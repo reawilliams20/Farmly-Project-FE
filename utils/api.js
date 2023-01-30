@@ -3,6 +3,17 @@
   const farmlyApi = axios.create({
     baseURL: "https://farmly.onrender.com/api"
   })
+
+  const locationApi = axios.create({
+    baseURL: 'https://api.postcodes.io'
+  })
+
+  export const getLocationData = (postcode) => {
+    return locationApi.get(`/postcodes/${postcode}`)
+    .then((res) => {
+        return res
+    })
+  }
   
   export const getFarms = () => {
     return farmlyApi.get("/farms")
@@ -29,5 +40,12 @@
     return farmlyApi.post('/produce', newProduce)
     .then((response)=>{
       return response.data
+    })
+  }
+
+  export const patchFarmDistanceById = (farm_id, body) => {
+    return farmlyApi.patch(`/farms/${farm_id}`, {distance_from_location: body})
+    .then((res) => {
+      return res.data
     })
   }

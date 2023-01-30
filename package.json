@@ -21,7 +21,8 @@
     "react-native": "0.70.5",
     "react-native-elements": "^3.4.3",
     "react-native-simple-radio-button": "^2.7.4",
-    "react-native-web": "~0.18.9"
+    "react-native-web": "~0.18.9",
+    "expo-location": "~15.0.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9"
