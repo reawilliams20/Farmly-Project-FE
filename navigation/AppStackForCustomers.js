@@ -1,20 +1,14 @@
 import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FarmList from "../screens/user/FarmList";
 import SingleFarm from "../screens/user/SingleFarm";
-import LoginScreen from "../screens/LoginScreen";
-import ProduceList from "../screens/farmer/ProduceList";
 import { Stack } from "./AuthStack";
 import MessagesScreen from "../screens/MessagesScreen";
-import MyFarm from "../screens/farmer/MyFarm";
 import SettingScreen from "../screens/SettingScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
-// const StackForFarms=  createNativeStackNavigator();
 
 function FarmStack() {
   return (

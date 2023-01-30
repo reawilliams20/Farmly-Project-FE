@@ -1,5 +1,5 @@
 import React, {useContext} from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Button } from "react-native-elements";
 import { signOut } from "firebase/auth";
 import { auth, db } from "../firebase";
@@ -13,7 +13,7 @@ const SettingScreen = ({navigation}) =>{
           .then(() => {
             isLoggedIn = false
             type = ""
-            navigation.replace("LoginScreen");
+            navigation.navigate("LoginScreen");
           })
           .catch((error) => {
             alert(error.message);

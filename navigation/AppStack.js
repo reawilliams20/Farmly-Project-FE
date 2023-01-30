@@ -1,10 +1,6 @@
 import { StyleSheet } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import FarmList from "../screens/user/FarmList";
-import SingleFarm from "../screens/user/SingleFarm";
-import LoginScreen from "../screens/LoginScreen";
 import ProduceList from "../screens/farmer/ProduceList";
 import { Stack } from "./AuthStack";
 import MessagesScreen from "../screens/MessagesScreen";
