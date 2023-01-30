@@ -31,3 +31,10 @@
       return res.data
     })
   }
+
+  export const postProduce = (newProduce) =>{
+    return farmlyApi.post('/produce', newProduce)
+    .then((response)=>{
+      return response.data
+    })
+  }
