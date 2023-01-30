@@ -7,6 +7,7 @@ import MessagesScreen from "../screens/MessagesScreen";
 import SettingScreen from "../screens/SettingScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
+import UserChat from "../screens/user/UserChat"
 
 const Tab = createBottomTabNavigator();
 
@@ -14,7 +15,8 @@ function FarmStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="FarmList" component={FarmList} />
-      <Stack.Screen name="SingleFarm" component={SingleFarm} />
+      <Stack.Screen name="SingleFarm"  component={SingleFarm} />
+      <Stack.Screen name="UserChat" component={UserChat} />
     </Stack.Navigator>
   );
 }

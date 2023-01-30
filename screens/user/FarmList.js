@@ -30,10 +30,11 @@ const FarmList = ({ navigation }) => {
       <FlatList
         data={farms}
         renderItem={({ item }) => {
+          console.log(item,"in Farmlist")
           return (
             <Card>
               <View >
-                <Text onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>{item.name}</Text>
+                <Text onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id, farm_name: item.name})}>{item.name}</Text>
                 {/* <Image source = {item.profile_pic}></Image> */}
               </View>
              

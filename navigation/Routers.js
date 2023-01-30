@@ -15,7 +15,7 @@ const Routes = () => {
       setUser(user);
     });
   }, []);
-
+  console.log(user, "in Routers")
   return (
     <NavigationContainer>
       {user ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}
