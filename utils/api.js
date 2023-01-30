@@ -38,3 +38,7 @@
       return response.data
     })
   }
+
+  export const deleteProduce = (produce_id) => {
+    return farmlyApi.delete(`/produce/${produce_id}`)
+  }
