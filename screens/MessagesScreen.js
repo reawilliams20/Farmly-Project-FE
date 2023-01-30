@@ -7,7 +7,7 @@ const MessagesScreen = ({navigation}) =>{
         <View style={styles.container}>
             <Text>Messages</Text>
             <Button
-            title = "Click Here"
+            title = "Users"
             onPress={()=>alert('button clicked')}
             />
         </View>
