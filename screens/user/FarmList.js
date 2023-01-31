@@ -57,12 +57,15 @@ const FarmList = ({ navigation }) => {
   }
 
   return (
+
+
       <View style={styles.container}>
       <Text> List of Farm</Text>
       <FlatList
         data={farms}
         renderItem={({ item }) => {
           return (
+
             <Card style={styles.card}>
               <Text 
               onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}
