@@ -1,6 +1,7 @@
 import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProduceList from "../screens/farmer/ProduceList";
+import SingleProduce from "../screens/farmer/SingleProduce";
 import { Stack } from "./AuthStack";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import MessagesScreenForFarmers from "../screens/farmer/MessagesScreenForFarmers";
@@ -35,6 +36,14 @@ function ChatStack(){
 }
 
 
+function ProduceStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="ProduceList" component={ProduceList} />
+      <Stack.Screen name="SingleProduce" component={SingleProduce} />
+    </Stack.Navigator>
+  );
+}
 const AppStack = () => {
   
   return (
@@ -54,8 +63,8 @@ const AppStack = () => {
       />
       <Tab.Screen
         name="ProduceList"
-        component={ProduceList}
-        options={{
+        component={ProduceStack}
+        options={({route}) => ({
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="food-apple"
@@ -63,7 +72,7 @@ const AppStack = () => {
               size={size}
             />
           ),
-        }}
+        })}
       />
       <Tab.Screen
         name="MessagesScreenForFarmers"
