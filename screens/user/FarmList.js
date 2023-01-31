@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Button } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image} from "react-native";
 import { Card } from "react-native-elements";
-import { getFarms, getLocationData, patchFarmDistanceById } from "../../utils/api";
+import { getFarms, patchFarmDistanceById } from "../../utils/api";
 import * as Location from 'expo-location';
 import { distanceCalculator } from "../../utils/utils";
+import { inline } from "react-native-web/dist/cjs/exports/StyleSheet/compiler";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
@@ -38,7 +39,6 @@ const FarmList = ({ navigation }) => {
 
   if (farms.length > 0) {
     if (currentLat && currentLon !== null) {
-      console.log(currentLat, currentLon)
       farms.forEach((farm) => {
         distanceCalculator(currentLat, currentLon, farm.address.postcode)
         .then((res) => {
@@ -51,28 +51,32 @@ const FarmList = ({ navigation }) => {
   if (loading) {
     return (
       <View>
-        <Text>Loading...</Text>
+        <Text>Calculating your closest farms...</Text>
       </View>
     )
   }
 
   return (
     <View style={styles.container}>
-      <Text>
-      {JSON.stringify(currentLocation)}
-      </Text>
       <FlatList
         data={farms}
         renderItem={({ item }) => {
           return (
-            <Card>
-              <Text onPress={() => navigation.navigate("SingleFarm")}>
-                {item.name}
-                {`\n`}
-                {item.address.postcode}
+            <Card style={styles.card}>
+              <Text 
+              onPress={() => navigation.navigate("SingleFarm")}
+              style={styles.baseText} >
+                <Text
+                style={styles.titleText}>
+                  {item.name}
+                </Text>
                 {`\n`}
                 {item.distance_from_location} km away
               </Text>
+               <Image
+                style={styles.Logo}
+                source={{uri: item.profile_pic}}
+                />
             </Card>
           );
         }}
@@ -86,8 +90,28 @@ export default FarmList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#8fcbbc",
+  },
+  card: {
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  Logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 100/2,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "black",
+  },
+  baseText: {
+    fontSize: 16,
+    textAlign: "left"
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });
