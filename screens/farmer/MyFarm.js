@@ -1,22 +1,40 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { getAuth } from "firebase/auth";
-
-const auth = getAuth();
-const user = auth.currentUser;
+import React, { useContext, useEffect, useState } from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import { getFarms } from "../../utils/api";
+import { UserContext } from "../../navigation/user";
 
 const MyFarm = ({navigation}) =>{
-    if(user!==null){
-        const displayName = user.displayName;
-        const email = user.email;
-        const photoURL = user.photoURL;
-    }
+    const {user} = useContext(UserContext)
+    const [farm, setFarm ] = useState([]);
+    let myFarm = []
+    useEffect(() => {
+        getFarms()
+        .then((response) => {
+            const listOfFarms = [...response]
+            return myFarm = listOfFarms.filter((farm) => {
+                return farm.username === user.email
+            }) 
+        })
+        .then(() => {
+                setFarm(myFarm)
+        })
+    }, [])
 
-    return (
-        <View style={styles.container}>
-            <Text>My Farm</Text>
-        </View>
-    )
+    if(farm.length !== 0) {
+        return (
+            <View style={styles.container}>
+                <Text>{farm[0].name}</Text>
+                <Text>{farm[0].address.street}</Text>
+                <Text>{farm[0].address.town}</Text>
+                <Text>{farm[0].address.county}</Text>
+                <Text>{farm[0].address.postcode}</Text>
+                <Text>{farm[0].address.country}</Text>
+                <Text>{farm[0].description}</Text>
+                <Image source={{uri:`${farm[0].profile_pic}`}}
+                style={{width: 400, height: 200}}/>
+            </View>
+        )
+    }
 }
 
 export default MyFarm
