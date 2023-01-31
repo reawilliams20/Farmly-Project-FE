@@ -30,7 +30,7 @@ const MessagesScreen = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
   const [messages, setMessages] = useState([]);
   const { user } = useContext(UserContext);
-  console.log(user, "username");
+
 
   useEffect(() => {
     getFarms().then((response) => {
@@ -43,7 +43,7 @@ const MessagesScreen = ({ navigation }) => {
     const currFarm = farms.filter((farm) => {
       return farm.username === user["email"];
     });
-    // console.log(currFarm[0].farm_id);
+
   }
 
   const q = query(
@@ -68,16 +68,13 @@ const MessagesScreen = ({ navigation }) => {
       unsubscribe();
     };
   }, []);
-  console.log(messages, "line 67");
 
   const msgFromUser = messages.filter((message) => {
     return message.user.sent_from_username == user["email"];
   });
-  console.log(msgFromUser, "in the message screen");
 
   const newMap = new Map(msgFromUser.map((m) => [m.user.sent_to_farm_id, m]));
   const unique = [...newMap.values()];
-  console.log(unique, "unique");
 
   if (unique.length === 0) {
     return (

@@ -6,7 +6,7 @@ import { Card } from "react-native-elements";
 import { FlatList } from "react-native";
 // import {Avatar, Card, Text} from 'react-native-paper'
 
-const SingleFarm = ({ navigation , route }) => {
+const SingleFarm = ({ navigation, route }) => {
   const { farm_id, farm_name } = route.params;
   const [produce, setProduce] = useState([]);
   useEffect(() => {
@@ -17,7 +17,6 @@ const SingleFarm = ({ navigation , route }) => {
 
 
   const produceInStock = produce.filter((item) => {
-    
     return item.farm_id === farm_id;
   });
 
@@ -31,12 +30,11 @@ const SingleFarm = ({ navigation , route }) => {
     <>
     <View style={styles.container}>
     <Button 
-          onPress={()=>goBack()} 
+          onPress={()=>navigation.navigate("FarmList")} 
           title ="Go back to farm list" />
       <FlatList
         data={produceInStock}
         renderItem={({ item }) => {
-            console.log(item,"in single Farm")
           return (
             <Card>
               <Text>{item.name}</Text>
@@ -45,8 +43,6 @@ const SingleFarm = ({ navigation , route }) => {
           );
         }}
       />
-    </View>
-     <View style={styles.container}>
      <Button
      title = "Message the farm"
      onPress={()=> navigation.navigate("UserChat", {farm_id: farm_id, farm_name: farm_name})}

@@ -62,28 +62,32 @@ const UserChat = ({ navigation, route }) => {
   }, []);
 
   console.log(messages, "in UserChat");
-
+ const newMsg = messages.filter((msg)=>{
+  return msg.user.sent_from_username === auth.currentUser.email
+})
+console.log(newMsg, "after filter")
  useEffect(() => {
         getFarmById(sent_to_farm_id||farm_id)
         .then((response) => {
           setFarms(response);
         });
       }, [sent_to_farm_id||farm_id]);
-  console.log(farms,"in UserChat farm by id")
-      console.log(auth.currentUser.email)
+      console.log(farms,"in UserChat farm by id")
+      console.log(auth.currentUser)
   return (
     <>
       <GiftedChat
-        messages={messages}
-        onSend={(messages) => onSend(messages)}
+        messages={newMsg}
+        onSend={(newMsg) => onSend(newMsg)}
         showAvatarForEveryMessage={true}
         user={{
           sent_to_farm_id: sent_to_farm_id||farm_id,
           sent_to_farm_name: farms.name,
+          sent_to_farm_email: farms.username,
           sent_to_farm_pic: farms.profile_pic, 
           avatar: auth?.currentUser?.photoURL,
-          sent_from_email: auth?.currentUser?.email,
-          sent_from_username: auth?.currentUser?.displayName
+          sent_from_name: auth?.currentUser?.displayName,
+          _id: auth?.currentUser?.email,
         }}
       />
     </>

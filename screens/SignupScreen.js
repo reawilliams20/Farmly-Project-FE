@@ -48,7 +48,6 @@ const SignUpScreen = ({ navigation }) => {
             : "https://www.vecteezy.com/vector-art/1840618-picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector",
         });
       })
-
       .catch((error) => {
         alert(`Something went wrong with sign up: ${error} `);
       });

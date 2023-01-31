@@ -2,17 +2,19 @@ import { StyleSheet } from "react-native";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import ProduceList from "../screens/farmer/ProduceList";
 import { Stack } from "./AuthStack";
-import MessagesScreen from "../screens/MessagesScreen";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import MessagesScreenForFarmers from "../screens/farmer/MessagesScreenForFarmers";
 import MyFarm from "../screens/farmer/MyFarm";
 import SettingScreen from "../screens/SettingScreen";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Ionicons from "react-native-vector-icons/Ionicons";
-
+import FarmerChat from "../screens/farmer/FarmerChat";
 
 const Tab = createBottomTabNavigator();
 
 const SettingStack = ({navigation}) => (
-  <Stack.Navigator>
+  <Stack.Navigator
+  initialRouteName='MessagesScreenForFarmers'>
     <Stack.Screen
       name="Profile"
       component={SettingScreen}
@@ -22,6 +24,15 @@ const SettingStack = ({navigation}) => (
     />
   </Stack.Navigator>
 );
+const NewStack = createNativeStackNavigator()
+function ChatStack(){
+  return (
+    <NewStack.Navigator screenOptions={{ headerShown: false }}>
+    <NewStack.Screen name="MessagesScreenForFarmers" component={MessagesScreenForFarmers} />
+    <NewStack.Screen name="FarmerChat" component={ FarmerChat } />
+    </NewStack.Navigator>
+  )
+}
 
 
 const AppStack = () => {
@@ -55,8 +66,8 @@ const AppStack = () => {
         }}
       />
       <Tab.Screen
-        name="Messages"
-        component={MessagesScreen}
+        name="MessagesScreenForFarmers"
+        component={ChatStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons
