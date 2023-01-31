@@ -31,7 +31,6 @@ const MessagesScreenForFarmers =({navigation})=>{
     const [farms, setFarms] = useState([]);
     const [messages, setMessages] = useState([]);
     const { user } = useContext(UserContext);
-    console.log(user['email'], "in message screen for farmers");
 
     useEffect(() => {
         getFarms().then((response) => {
@@ -48,7 +47,9 @@ const MessagesScreenForFarmers =({navigation})=>{
     useLayoutEffect(() => {
         const unsubscribe = onSnapshot(q, (snapshot) =>
           setMessages(
-            snapshot.docs.map((doc) => ({
+            snapshot.docs.map((doc) => (
+              console.log(doc.data(), "inside Messages screen"),
+              {
               _id: doc.data()._id,
               createdAt: doc.data().createdAt.toDate(),
               text: doc.data().text,
@@ -60,13 +61,9 @@ const MessagesScreenForFarmers =({navigation})=>{
           unsubscribe();
         };
       }, []);
-    //   const msgFromUser = messages.filter((message) => {
-    //     return message.user.sent_to_farm_id == user["farm_id"];
-    //   });
-    //   console.log(msgFromUser, "msgFromUser")
-    //   const newMap = new Map(msgFromUser.map((m) => [m.user.sent_to_farm_id, m]));
-    //   const unique = [...newMap.values()];
-    //   console.log(unique,"73")
+
+      const newMap = new Map(messages.map((m) => [m.user.sent_from_name, m]));
+      const unique = [...newMap.values()];
 
       if (messages.length ===0) return (
         <View style={styles.container}>
@@ -77,7 +74,7 @@ const MessagesScreenForFarmers =({navigation})=>{
     return (
         <Container>
         <FlatList
-          data={messages}
+          data={unique}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
            

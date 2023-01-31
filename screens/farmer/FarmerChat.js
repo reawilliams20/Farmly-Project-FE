@@ -28,7 +28,9 @@ const FarmerChat = ({navigation, route}) =>{
       useLayoutEffect(() => {
         const unsubscribe = onSnapshot(q, (snapshot) =>
           setMessages(
-            snapshot.docs.map((doc) => ({
+            snapshot.docs.map((doc) => (
+              console.log(doc.data(),"inside FarmerChat"),
+              {
               _id: doc.data()._id,
               createdAt: doc.data().createdAt.toDate(),
               text: doc.data().text,
@@ -40,9 +42,6 @@ const FarmerChat = ({navigation, route}) =>{
           unsubscribe();
         };
       }, [sent_to_farm_id||farm_id]);
-      
-    
-    console.log(messages, "in the farmerChat");
 
     return (
         <>
@@ -51,6 +50,7 @@ const FarmerChat = ({navigation, route}) =>{
           onSend={(messages) => onSend(messages)}
           showAvatarForEveryMessage={true}
           user={{
+            _id:auth?.currentUser?.email,
             // sent_to_farm_id: sent_to_farm_id||farm_id,
             // sent_to_farm_name: farms.name,
             // sent_to_farm_email: farms.username,

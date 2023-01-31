@@ -39,7 +39,6 @@ const MessagesScreen = ({ navigation }) => {
   }, []);
 
   if (farms.length !== 0) {
-    console.log(farms, "in messagesscreen");
     const currFarm = farms.filter((farm) => {
       return farm.username === user["email"];
     });

@@ -20,7 +20,6 @@ const UserChat = ({ navigation, route }) => {
   const [messages, setMessages] = useState([]);
   const [farms, setFarms] = useState([])
   const {  farm_id , sent_to_farm_id } = route.params;
-  console.log( sent_to_farm_id);
   const { user } = useContext(UserContext);
 
 
@@ -34,7 +33,9 @@ const UserChat = ({ navigation, route }) => {
   useLayoutEffect(() => {
     const unsubscribe = onSnapshot(q, (snapshot) =>
       setMessages(
-        snapshot.docs.map((doc) => ({
+        snapshot.docs.map((doc) => (
+          console.log(doc.data(), "userchat"),
+          {
           _id: doc.data()._id,
           createdAt: doc.data().createdAt.toDate(),
           text: doc.data().text,
@@ -48,7 +49,6 @@ const UserChat = ({ navigation, route }) => {
   }, [sent_to_farm_id||farm_id]);
   
 
-  console.log(messages, "messages in chat1");
 
   useEffect(() => {
     setMessages([]);
@@ -61,19 +61,16 @@ const UserChat = ({ navigation, route }) => {
     addDoc(collection(db, "chats"), { _id, createdAt, text, user });
   }, []);
 
-  console.log(messages, "in UserChat");
  const newMsg = messages.filter((msg)=>{
   return msg.user.sent_from_username === auth.currentUser.email
 })
-console.log(newMsg, "after filter")
  useEffect(() => {
         getFarmById(sent_to_farm_id||farm_id)
         .then((response) => {
           setFarms(response);
         });
       }, [sent_to_farm_id||farm_id]);
-      console.log(farms,"in UserChat farm by id")
-      console.log(auth.currentUser)
+    
   return (
     <>
       <GiftedChat
@@ -81,13 +78,14 @@ console.log(newMsg, "after filter")
         onSend={(newMsg) => onSend(newMsg)}
         showAvatarForEveryMessage={true}
         user={{
+          // _id: auth?.currentUser?.email,
           sent_to_farm_id: sent_to_farm_id||farm_id,
           sent_to_farm_name: farms.name,
           sent_to_farm_email: farms.username,
           sent_to_farm_pic: farms.profile_pic, 
           avatar: auth?.currentUser?.photoURL,
           sent_from_name: auth?.currentUser?.displayName,
-          _id: auth?.currentUser?.email,
+          sent_from_username: auth?.currentUser?.email,
         }}
       />
     </>
