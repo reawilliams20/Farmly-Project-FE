@@ -12,7 +12,7 @@ const MyFarm = ({navigation}) =>{
         .then((response) => {
             const listOfFarms = [...response]
             return myFarm = listOfFarms.filter((farm) => {
-                return farm.email === user.email
+                return farm.username === user.email
             }) 
         })
         .then(() => {

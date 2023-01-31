@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable, ScrollView } from "react-native";
+import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable, ScrollView, Image } from "react-native";
 import RadioForm from 'react-native-simple-radio-button';
 import { Card } from "react-native-elements";
 import { deleteProduce, getFarms, getProduce, postProduce } from "../../utils/api";
@@ -36,12 +36,12 @@ const ProduceList = ({ navigation }) => {
   const listOfFarms = [...farms]
 
   const currFarm = listOfFarms.filter((farm) => {
-    return farm.email === user.email
+    return farm.username === user.email
   })
 
   const listOfProduce = [...produce]
   const myProduce = listOfProduce.filter((produce) => {
-    return user.email === produce.email
+    return user.email === produce.username
   })
 
   const addProduce = () => {
@@ -57,8 +57,6 @@ const ProduceList = ({ navigation }) => {
         "username": user.email,
         "produce_pic": pic
     }
-    console.log(newProduce)
-    console.log(currFarm)
 
     //optimistic rendering:
     setProduce((produceList) => {
@@ -159,6 +157,7 @@ const ProduceList = ({ navigation }) => {
             <Card>
               <Text style={styles.textName} onPress={() => navigation.navigate("SingleProduce", {produce_id: item.produce_id})}>{item.name}</Text>
               <Text style={styles.text}>Stock: {item.stock}</Text>
+              <Image style={styles.pic} source={{uri:`${item.produce_pic}`}}/>
               <Pressable style={styles.button} onPress={()=> handleDelete(item.produce_id)}>
               <Text style={styles.deltext}>🗑️</Text>               
               </Pressable>
@@ -201,6 +200,10 @@ const styles = StyleSheet.create({
     backgroundColor: "blue",
     padding: 10,
     borderRadius: 5,
-  }
-
+  },
+  pic:{
+    alignSelf: "center",
+    width:100,
+    height: 60
+}
 });
