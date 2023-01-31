@@ -21,6 +21,13 @@
         return response.data
     })
   };
+  
+  export const getFarmById = (farm_id)=>{
+    return farmlyApi.get(`/farms/${farm_id}`)
+    .then((response)=>{
+      return response.data
+    })
+  };
 
   export const getProduce = () =>{
     return farmlyApi.get('/produce')
@@ -43,9 +50,21 @@
     })
   }
 
+
   export const patchFarmDistanceById = (farm_id, body) => {
     return farmlyApi.patch(`/farms/${farm_id}`, {distance_from_location: body})
     .then((res) => {
       return res.data
+    })
+  }
+
+  export const deleteProduce = (produce_id) => {
+    return farmlyApi.delete(`/produce/${produce_id}`)
+  }
+
+  export const postUser = (newUser) => {
+    return farmlyApi.post('/users', newUser)
+    .then((response)=>{
+      return response.data
     })
   }

@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image} from "react-native";
+
+import { View, Text, StyleSheet, FlatList, ScrollView, Image } from "react-native";
 import { Card } from "react-native-elements";
 import { getFarms, patchFarmDistanceById } from "../../utils/api";
 import * as Location from 'expo-location';
 import { distanceCalculator } from "../../utils/utils";
-import { inline } from "react-native-web/dist/cjs/exports/StyleSheet/compiler";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
@@ -57,14 +57,15 @@ const FarmList = ({ navigation }) => {
   }
 
   return (
-    <View style={styles.container}>
+      <View style={styles.container}>
+      <Text> List of Farm</Text>
       <FlatList
         data={farms}
         renderItem={({ item }) => {
           return (
             <Card style={styles.card}>
               <Text 
-              onPress={() => navigation.navigate("SingleFarm")}
+              onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}
               style={styles.baseText} >
                 <Text
                 style={styles.titleText}>
@@ -82,6 +83,8 @@ const FarmList = ({ navigation }) => {
         }}
       />
     </View>
+
+    
   );
 };
 
