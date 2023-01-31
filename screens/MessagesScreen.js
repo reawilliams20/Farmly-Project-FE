@@ -1,120 +1,131 @@
-import React, {useContext, useState, useLayoutEffect, useEffect} from "react";
-import { View, Text, StyleSheet,FlatList } from "react-native";
+import React, { useContext, useState, useLayoutEffect, useEffect } from "react";
+import { View, Text, StyleSheet, FlatList } from "react-native";
 import { Button } from "react-native-elements";
 import { UserContext } from "../navigation/user";
-import { collection, addDoc, getDocs, query, orderBy, onSnapshot, where } 
-from 'firebase/firestore';
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  orderBy,
+  onSnapshot,
+  where,
+} from "firebase/firestore";
 import { getFarms } from "../utils/api";
 import { auth, db } from "../firebase";
-import { 
-    Container, 
-    Card,
-    UserInfo,
-    UserImgWrapper,
-    UserImg,
-    UserInfoText,
-    UserName,
-    PostTime,
-    MessageText,
-    TextSection,} from "../styles/MessageStyle";
+import {
+  Container,
+  Card,
+  UserInfo,
+  UserImgWrapper,
+  UserImg,
+  UserInfoText,
+  UserName,
+  PostTime,
+  MessageText,
+  TextSection,
+} from "../styles/MessageStyle";
 
-const MessagesScreen = ({navigation}) =>{
-    const [farms, setFarms] = useState([]);
-    const [messages, setMessages] = useState([]);
-    const { user } = useContext(UserContext);
-    console.log( user["email"] , "username")
+const MessagesScreen = ({ navigation }) => {
+  const [farms, setFarms] = useState([]);
+  const [messages, setMessages] = useState([]);
+  const { user } = useContext(UserContext);
+  console.log(user, "username");
 
-    const q = query(collection(db, 'chats'), where('user.sent_from_username', "==" , user["email"] ), orderBy('createdAt', 'desc'));
+  useEffect(() => {
+    getFarms().then((response) => {
+      setFarms(response);
+    });
+  }, []);
 
-    useEffect(() => {
-        getFarms()
-        .then((response) => {
-          setFarms(response);
-        });
-      }, []);
-      console.log(farms,"in messagesscreen")
+  if (farms.length !== 0) {
+    console.log(farms, "in messagesscreen");
+    const currFarm = farms.filter((farm) => {
+      return farm.username === user["email"];
+    });
+    // console.log(currFarm[0].farm_id);
+  }
 
-    useLayoutEffect(() => {
-    const unsubscribe = onSnapshot(q, (snapshot) => 
-    setMessages(
-      snapshot.docs.map(doc =>  
-        (
-          {
+  const q = query(
+    collection(db, "chats"),
+    where('user.sent_from_username', "==" , user["email"] ),
+    // where("user.sent_to_farm_id", "==", 1),
+    orderBy("createdAt", "desc")
+  );
+
+  useLayoutEffect(() => {
+    const unsubscribe = onSnapshot(q, (snapshot) =>
+      setMessages(
+        snapshot.docs.map((doc) => ({
           _id: doc.data()._id,
           createdAt: doc.data().createdAt.toDate(),
           text: doc.data().text,
           user: doc.data().user,
-        }
+        }))
       )
-      )
-  ))
-  return ()=>{
-    unsubscribe();
+    );
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+  console.log(messages, "line 67");
+
+  const msgFromUser = messages.filter((message) => {
+    return message.user.sent_from_username == user["email"];
+  });
+  console.log(msgFromUser, "in the message screen");
+
+  const newMap = new Map(msgFromUser.map((m) => [m.user.sent_to_farm_id, m]));
+  const unique = [...newMap.values()];
+  console.log(unique, "unique");
+
+  if (unique.length === 0) {
+    return (
+      <View style={styles.container}>
+        <Text>{"You have no messages!"}</Text>
+      </View>
+    );
   }
-},[])
+  return (
+    <Container>
+      <FlatList
+        data={unique}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card
+            onPress={() =>
+              navigation.navigate("UserChat", {
+                userName: item.user.sent_from_username,
+                sent_to_farm_id: item.user.sent_to_farm_id,
+              })
+            }
+          >
+            <UserInfo>
+              <UserImgWrapper>
+                <UserImg source={item.user.sent_to_farm_pic} />
+              </UserImgWrapper>
+              <TextSection>
+                <UserInfoText>
+                  <UserName>{item.user.sent_to_farm_name}</UserName>
+                  {/* <PostTime>{item.messageTime}</PostTime> */}
+                </UserInfoText>
+                <MessageText>{item.text}</MessageText>
+              </TextSection>
+            </UserInfo>
+          </Card>
+        )}
+      />
+    </Container>
+  );
+};
 
-const msgFromUser = messages.filter((message)=>{
-    return message.user.sent_from_username == user["email"]
-})
-console.log(msgFromUser, "in the message screen")
+export default MessagesScreen;
 
-
-const newMap = new Map(msgFromUser.map((m)=>[m.user.sent_to_farm_id, m]))
-const unique = [...newMap.values()]
-
-
-// const data = unique.forEach((msg)=>{
-//     return farms.forEach((farm)=>{
-//         console.log(farm.farm_id ,msg.user.sent_to_farm_id )
-//         if (msg.user.sent_to_farm_id===farm.farm_id)
-//         msg.user.sent_to_farm_id = farm.name
-//     })
-// })
-
-
-if (unique.length ===0){
-    return (
-        <View style = {styles.container}> 
-            <Text > 
-                    {"You have no messages!"}
-                </Text>
-        </View>
-    )
-}
-    return (
-        <Container>
-               <FlatList 
-            data={unique}
-            keyExtractor={item=>item.id}
-            renderItem={({item}) => (
-              <Card onPress={() => navigation.navigate('UserChat', {userName: item.user.sent_from_username, sent_to_farm_id:item.user.sent_to_farm_id})}>
-                <UserInfo>
-                  <UserImgWrapper>
-                    <UserImg source={ 
-                "http://www.chyreenfruitfarm.co.uk/web_logo.gif"} />
-                  </UserImgWrapper>
-                  <TextSection>
-                    <UserInfoText>
-                      <UserName>{item.user.sent_to_farm_id}</UserName>
-                      {/* <PostTime>{item.messageTime}</PostTime> */}
-                    </UserInfoText>
-                    <MessageText>{item.text}</MessageText>
-                  </TextSection>
-                </UserInfo>
-              </Card>
-            )}
-          />
-        </Container>
-    )
-}
-
-export default MessagesScreen
-
-const styles= StyleSheet.create({
-    container:{
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'#8fcbbc'
-    }
-})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#8fcbbc",
+  },
+});

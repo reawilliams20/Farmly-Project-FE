@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { auth, db } from "../../firebase";
+import { getFarmById } from "../../utils/api";
 import {
   collection,
   addDoc,
@@ -16,18 +17,19 @@ import {
 import { UserContext } from "../../navigation/user";
 
 const UserChat = ({ navigation, route }) => {
-
   const [messages, setMessages] = useState([]);
+  const [farms, setFarms] = useState([])
   const {  farm_id , sent_to_farm_id } = route.params;
   console.log( sent_to_farm_id);
   const { user } = useContext(UserContext);
-  console.log(user, "15555");
+
 
   const q = query(
     collection(db, "chats"),
     where("user.sent_to_farm_id", "==", sent_to_farm_id||farm_id),
     orderBy("createdAt", "desc")
   );
+
 
   useLayoutEffect(() => {
     const unsubscribe = onSnapshot(q, (snapshot) =>
@@ -61,14 +63,27 @@ const UserChat = ({ navigation, route }) => {
 
   console.log(messages, "in UserChat");
 
+ useEffect(() => {
+        getFarmById(sent_to_farm_id||farm_id)
+        .then((response) => {
+          setFarms(response);
+        });
+      }, [sent_to_farm_id||farm_id]);
+  console.log(farms,"in UserChat farm by id")
+      console.log(auth.currentUser.email)
   return (
     <>
       <GiftedChat
         messages={messages}
         onSend={(messages) => onSend(messages)}
+        showAvatarForEveryMessage={true}
         user={{
           sent_to_farm_id: sent_to_farm_id||farm_id,
-          sent_from_username: user["email"],
+          sent_to_farm_name: farms.name,
+          sent_to_farm_pic: farms.profile_pic, 
+          avatar: auth?.currentUser?.photoURL,
+          sent_from_email: auth?.currentUser?.email,
+          sent_from_username: auth?.currentUser?.displayName
         }}
       />
     </>
