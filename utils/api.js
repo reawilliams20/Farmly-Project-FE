@@ -42,3 +42,10 @@
   export const deleteProduce = (produce_id) => {
     return farmlyApi.delete(`/produce/${produce_id}`)
   }
+
+  export const postUser = (newUser) => {
+    return farmlyApi.post('/users', newUser)
+    .then((response)=>{
+      return response.data
+    })
+  }
