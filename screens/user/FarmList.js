@@ -1,29 +1,63 @@
 import React, { useEffect, useState } from "react";
+
 import { View, Text, StyleSheet, FlatList, ScrollView, Image } from "react-native";
 import { Card } from "react-native-elements";
-import { getFarms } from "../../utils/api";
+import { getFarms, patchFarmDistanceById } from "../../utils/api";
+import * as Location from 'expo-location';
+import { distanceCalculator } from "../../utils/utils";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
+  const [currentLocation, setCurrentLocation] = useState(null)
+  const [currentLat, setCurrentLat] = useState(null)
+  const [currentLon, setCurrentLon] = useState(null)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+
+    (async () => {
+      let {status} = Location.requestForegroundPermissionsAsync()
+      if (status === "granted"){
+        console.log("yes")
+      } else {
+        console.log("no")
+      }
+
+      let location = await Location.getCurrentPositionAsync({})
+      setCurrentLocation(location)
+      setCurrentLat(location.coords.latitude)
+      setCurrentLon(location.coords.longitude)
+      setLoading(false)
+    })()
+  
     getFarms()
     .then((response) => {
-      setFarms(response);
-    });
+      setFarms(response)
+    })
+    
   }, []);
 
-// const FarmCard = ({profile_pic, description, farm_id})=>(
-//   <SafeAreaView>
-//     <TouchableOpacity onPress= {()=>navigation.navigate("SingleFarm", {farm_id: farm_id, description: description, img_url: profile_pic})}
-//     <View> 
-//     </View>
-//     </TouchableOpacity>
-//   </SafeAreaView>
-// )
+  if (farms.length > 0) {
+    if (currentLat && currentLon !== null) {
+      farms.forEach((farm) => {
+        distanceCalculator(currentLat, currentLon, farm.address.postcode)
+        .then((res) => {
+          patchFarmDistanceById(farm.farm_id, res)
+        })
+      })
+    }
+  } 
 
+  if (loading) {
+    return (
+      <View>
+        <Text>Calculating your closest farms...</Text>
+      </View>
+    )
+  }
 
   return (
+
 
       <View style={styles.container}>
       <Text> List of Farm</Text>
@@ -31,13 +65,22 @@ const FarmList = ({ navigation }) => {
         data={farms}
         renderItem={({ item }) => {
           return (
-            <Card>
-              <View >
-                <Text onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>{item.name}</Text>
-                {/* <Image source = {item.profile_pic}></Image> */}
-              </View>
-             
-            
+
+            <Card style={styles.card}>
+              <Text 
+              onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}
+              style={styles.baseText} >
+                <Text
+                style={styles.titleText}>
+                  {item.name}
+                </Text>
+                {`\n`}
+                {item.distance_from_location} km away
+              </Text>
+               <Image
+                style={styles.Logo}
+                source={{uri: item.profile_pic}}
+                />
             </Card>
           );
         }}
@@ -53,8 +96,28 @@ export default FarmList;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#8fcbbc",
+  },
+  card: {
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "row",
+  },
+  Logo: {
+    width: 100,
+    height: 100,
+    borderRadius: 100/2,
+    overflow: "hidden",
+    borderWidth: 3,
+    borderColor: "black",
+  },
+  baseText: {
+    fontSize: 16,
+    textAlign: "left"
+  },
+  titleText: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

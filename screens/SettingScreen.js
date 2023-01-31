@@ -7,7 +7,7 @@ import { UserContext } from "../navigation/user";
 
 
 const SettingScreen = ({navigation}) =>{
-    let { isLoggedIn, type }= useContext(UserContext)
+    let { user, isLoggedIn, type }= useContext(UserContext)
     const signOutNow = () => {
         signOut(auth)
           .then(() => {
@@ -20,6 +20,8 @@ const SettingScreen = ({navigation}) =>{
           });
       };
 
+console.log(user)
+      
     return (
         <View style={styles.container}>
             <Button
