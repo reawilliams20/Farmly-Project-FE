@@ -62,6 +62,20 @@
     return farmlyApi.delete(`/produce/${produce_id}`)
   }
 
+
+  export const getProduceById = (produce_id) =>{
+    return farmlyApi.get(`/produce/${produce_id}`)
+    .then((response)=>{
+      return response.data
+    })
+  }
+
+  export const updateProduceById = (produce_id, updateBody) => {
+    return farmlyApi.patch(`/produce/${produce_id}`, updateBody)
+    .then((response) => {
+      return response.data
+    })
+    
   export const postUser = (newUser) => {
     return farmlyApi.post('/users', newUser)
     .then((response)=>{
