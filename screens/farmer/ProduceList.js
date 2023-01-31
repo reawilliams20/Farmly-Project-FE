@@ -35,12 +35,12 @@ const ProduceList = ({ navigation }) => {
   const listOfFarms = [...farms]
 
   const currFarm = listOfFarms.filter((farm) => {
-    return farm.username === user.email
+    return farm.email === user.email
   })
 
   const listOfProduce = [...produce]
   const myProduce = listOfProduce.filter((produce) => {
-    return user.email === produce.username
+    return user.email === produce.email
   })
 
   const addProduce = () => {
