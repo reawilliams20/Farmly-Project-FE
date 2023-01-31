@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable } from "react-native";
+import { View, Text, StyleSheet, FlatList, Button, TextInput, Pressable, ScrollView } from "react-native";
 import RadioForm from 'react-native-simple-radio-button';
 import { Card } from "react-native-elements";
 import { deleteProduce, getFarms, getProduce, postProduce } from "../../utils/api";
@@ -16,6 +16,7 @@ const ProduceList = ({ navigation }) => {
   const [price, setPrice] = useState('')
   const [unit, setUnit] = useState('')
   const [description, setDescription] = useState('')
+  const [pic, setPic] = useState('')
 
   const categories = [
     { label: 'fruits', value: 'fruits' },
@@ -30,7 +31,7 @@ const ProduceList = ({ navigation }) => {
     getFarms().then((response) => {
       setFarms(response)
     })
-  }, []);
+  }, [produce]);
 
   const listOfFarms = [...farms]
 
@@ -53,7 +54,8 @@ const ProduceList = ({ navigation }) => {
         "unit": unit,
         "description": description,
         "farm_id": currFarm[0].farm_id,
-        "username": user.email
+        "username": user.email,
+        "produce_pic": pic
     }
     console.log(newProduce)
     console.log(currFarm)
@@ -91,10 +93,9 @@ const ProduceList = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Button
-            title = " + "
-            onPress={() => setShouldShow(!shouldShow)}
-      />
+      <Pressable style={styles.add} onPress={()=> setShouldShow(!shouldShow)}>
+      <Text style={styles.content}>+</Text>
+      </Pressable>
 
       {shouldShow ?
         ( <View>
@@ -126,6 +127,13 @@ const ProduceList = ({ navigation }) => {
           placeholder="description"
           onChangeText={description => setDescription(description)}
           />
+
+          <Text>Image:</Text>
+          <TextInput
+          placeholder="https://www.image.com"
+          onChangeText={pic => setPic(pic)}
+          />
+
           <Text>Category:</Text>
           <RadioForm
           radio_props={categories}
@@ -135,20 +143,22 @@ const ProduceList = ({ navigation }) => {
           }}
           />
 
-          <Button
-          title = "Add Produce"
-          onPress={()=> addProduce()}
-          />
+          <Pressable style={styles.add} onPress={()=> addProduce()}>
+          <Text>Add Produce</Text>
+          </Pressable>
+
         </View>)
       : null }
 
-
+      <ScrollView>
+        <View>
       <FlatList
         data={myProduce}
         renderItem={({ item }) => {
           return (
             <Card>
-              <Text>{item.name}</Text>
+              <Text style={styles.textName} onPress={() => navigation.navigate("SingleProduce", {produce_id: item.produce_id})}>{item.name}</Text>
+              <Text style={styles.text}>Stock: {item.stock}</Text>
               <Pressable style={styles.button} onPress={()=> handleDelete(item.produce_id)}>
               <Text style={styles.deltext}>🗑️</Text>               
               </Pressable>
@@ -156,6 +166,8 @@ const ProduceList = ({ navigation }) => {
           );
         }}
       />
+      </View>
+      </ScrollView>
     </View>
   );
 };
@@ -175,7 +187,20 @@ const styles = StyleSheet.create({
   },
   deltext: {
     textAlign: "center",
-    margin: 0,
-    padding: 0
+    marginTop: 20,
+    padding: 0,
+  },
+  text: {
+    textAlign: "center"
+  },
+  textName: {
+    textAlign: "center",
+    fontWeight: "bold"
+  },
+  add:{
+    backgroundColor: "blue",
+    padding: 10,
+    borderRadius: 5,
   }
+
 });
