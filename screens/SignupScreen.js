@@ -52,12 +52,13 @@ const SignUpScreen = ({ navigation }) => {
       })
       .then(() => {
         const newUser = {
-          "username":email,
+          "username":name,
+          "email":email,
           "postcode":postcode,
           "type":type,
           "profile_pic":avatar
           ? avatar
-          : "https://example.com/jane-q-user/profile.jpg",
+          : "https://www.vecteezy.com/vector-art/1840618-picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector",
           "password":password
         }
         postUser(newUser)
