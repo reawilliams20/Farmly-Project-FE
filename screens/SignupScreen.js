@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView,Pressable } from "react-native";
 import { Button,Input } from "react-native-elements";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
@@ -6,6 +6,7 @@ import { Picker } from "@react-native-picker/picker";
 import { auth } from "../firebase";
 import { UserContext } from "../navigation/user";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import { postUser } from "../utils/api";
 
 const SignUpScreen = ({ navigation }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -47,15 +48,28 @@ const SignUpScreen = ({ navigation }) => {
             ? avatar
             : "https://example.com/jane-q-user/profile.jpg",
         });
-      })
 
+      })
+      .then(() => {
+        const newUser = {
+          "username":email,
+          "postcode":postcode,
+          "type":type,
+          "profile_pic":avatar
+          ? avatar
+          : "https://example.com/jane-q-user/profile.jpg",
+          "password":password
+        }
+        postUser(newUser)
+      })
       .catch((error) => {
         alert(`Something went wrong with sign up: ${error} `);
       });
   };
 
   return (
-    <ScrollView>
+     <ScrollView>
+    
       <View style={styles.container}>
         <Input
           style={styles.inputContainer}   
@@ -147,7 +161,7 @@ const SignUpScreen = ({ navigation }) => {
           onPress={() => handleSignUp(currPostcode, currSelectType)}
         />
       </View>
-    </ScrollView>
+      </ScrollView>
   );
 };
 
@@ -163,11 +177,12 @@ const styles = StyleSheet.create({
   },
   picker: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'bottom'
   },
+
   inputContainer: {
     backgroundColor: 'white',
-    width: '100%',
+    width: '90%',
     borderRadius: 8,
     flexDirection: 'row',
     alignItems: 'center',
@@ -177,7 +192,7 @@ const styles = StyleSheet.create({
   inputField: {
     padding: 14,
     fontSize: 22,
-    width: '90%'
+    width: '80%'
   }
 });
 
