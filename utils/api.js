@@ -75,6 +75,7 @@
     .then((response) => {
       return response.data
     })
+  }
     
   export const postUser = (newUser) => {
     return farmlyApi.post('/users', newUser)
