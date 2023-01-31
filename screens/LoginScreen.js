@@ -18,7 +18,7 @@ const LoginScreen = ({ navigation }) => {
         setFarms(response);
       });
     }, []);
-
+    
 
     const handleLogin = (username)=>{
       const validEmail=farms.filter((farm)=>

@@ -65,10 +65,9 @@ const FarmList = ({ navigation }) => {
         data={farms}
         renderItem={({ item }) => {
           return (
-
             <Card style={styles.card}>
               <Text 
-              onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}
+              onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id,farm_name: item.name})}
               style={styles.baseText} >
                 <Text
                 style={styles.titleText}>

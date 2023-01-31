@@ -46,7 +46,7 @@ const SignUpScreen = ({ navigation }) => {
           displayName: name,
           photoURL: avatar
             ? avatar
-            : "https://example.com/jane-q-user/profile.jpg",
+            : "https://www.vecteezy.com/vector-art/1840618-picture-profile-icon-male-icon-human-or-people-sign-and-symbol-vector",
         });
 
       })
