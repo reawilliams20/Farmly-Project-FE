@@ -29,6 +29,8 @@ const MyFarm = ({navigation}) =>{
     if(farm.length !== 0) {
         return (
             <View style={styles.container}>
+                <Image source={{uri:`${farm[0].profile_pic}`}}
+                style={{width: 400, height: 200}}/>
                 <Text>{farm[0].name}</Text>
                 <Text>{farm[0].address.street}</Text>
                 <Text>{farm[0].address.town}</Text>
@@ -36,8 +38,6 @@ const MyFarm = ({navigation}) =>{
                 <Text>{farm[0].address.postcode}</Text>
                 <Text>{farm[0].address.country}</Text>
                 <Text>{farm[0].description}</Text>
-                <Image source={{uri:`${farm[0].profile_pic}`}}
-                style={{width: 400, height: 200}}/>
             </View>
         )
     }

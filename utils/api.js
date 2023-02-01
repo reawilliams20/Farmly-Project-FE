@@ -90,3 +90,10 @@
       return response.data
     })
   }
+
+  export const updateUserById = (user_id, updateBody) => {
+    return farmlyApi.patch(`/users/${user_id}`, updateBody)
+    .then((response) => {
+      return response.data
+    })
+  }
