@@ -14,22 +14,31 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
-import { UserContext } from "../../navigation/user";
+
 
 const FarmerChat = ({navigation, route}) =>{
     const [messages, setMessages] = useState([]);
-    const {userName, sent_to_farm_id} = route.params; 
+    const {userName, sent_to_farm_id, sent_to_farm_email} = route.params; 
     const q = query(
         collection(db, "chats"),
-        where("user.sent_from_username", "==", userName),
-        where("user.sent_to_farm_id", "==", sent_to_farm_id ),
         orderBy("createdAt", "desc")
       );
       useLayoutEffect(() => {
+        navigation.setOptions({
+          headerLeft: () => (
+            <View style={{ marginLeft: 20 }}>
+              <Avatar
+                rounded
+                source={{
+                  uri: auth?.currentUser?.photoURL,
+                }}
+              />
+            </View>
+          ),
+        });
         const unsubscribe = onSnapshot(q, (snapshot) =>
           setMessages(
             snapshot.docs.map((doc) => (
-              console.log(doc.data(),"inside FarmerChat"),
               {
               _id: doc.data()._id,
               createdAt: doc.data().createdAt.toDate(),
@@ -41,20 +50,30 @@ const FarmerChat = ({navigation, route}) =>{
         return () => {
           unsubscribe();
         };
-      }, [sent_to_farm_id||farm_id]);
+      }, [userName]);
+      const renderMessages= messages.filter((msg)=> {
+      return msg.user.sent_from_username ===userName&&msg.user.sent_to_farm_id ===sent_to_farm_id ||msg.user.sent_to_customer_name===userName && msg.user.sent_from_username===sent_to_farm_email
+      })
+      useEffect(() => {
+        setMessages([]);
+      }, []);
+      const onSend = useCallback((renderMessages = []) => {
+        setMessages((previousMessages) =>
+          GiftedChat.append(previousMessages, renderMessages)
+        );
+        const { _id, createdAt, text, user } = renderMessages[0];
+        addDoc(collection(db, "chats"), { _id, createdAt, text, user });
+      }, []);
 
     return (
         <>
         <GiftedChat
-          messages={messages}
-          onSend={(messages) => onSend(messages)}
+          messages={renderMessages}
+          onSend={(renderMessages) => onSend(renderMessages)}
           showAvatarForEveryMessage={true}
           user={{
             _id:auth?.currentUser?.email,
-            // sent_to_farm_id: sent_to_farm_id||farm_id,
-            // sent_to_farm_name: farms.name,
-            // sent_to_farm_email: farms.username,
-            // sent_to_farm_pic: farms.profile_pic, 
+            sent_to_customer_name: userName,
             avatar: auth?.currentUser?.photoURL,
             sent_from_name: auth?.currentUser?.displayName,
             sent_from_username: auth?.currentUser?.email,

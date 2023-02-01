@@ -29,6 +29,13 @@
     })
   };
 
+  export const postFarm = (newFarm) =>{
+    return farmlyApi.post(`/farms`, newFarm)
+    .then((response)=>{
+      return response.data
+    })
+  }
+
   export const getProduce = () =>{
     return farmlyApi.get('/produce')
     .then((response)=>{

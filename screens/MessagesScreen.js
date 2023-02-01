@@ -48,7 +48,6 @@ const MessagesScreen = ({ navigation }) => {
   const q = query(
     collection(db, "chats"),
     where('user.sent_from_username', "==" , user["email"] ),
-    // where("user.sent_to_farm_id", "==", 1),
     orderBy("createdAt", "desc")
   );
 
@@ -71,7 +70,7 @@ const MessagesScreen = ({ navigation }) => {
   const msgFromUser = messages.filter((message) => {
     return message.user.sent_from_username == user["email"];
   });
-
+  console.log(msgFromUser, "733333")
   const newMap = new Map(msgFromUser.map((m) => [m.user.sent_to_farm_id, m]));
   const unique = [...newMap.values()];
 
@@ -82,6 +81,7 @@ const MessagesScreen = ({ navigation }) => {
       </View>
     );
   }
+  
   return (
     <Container>
       <FlatList
@@ -90,10 +90,13 @@ const MessagesScreen = ({ navigation }) => {
         renderItem={({ item }) => (
           <Card
             onPress={() =>
-              navigation.navigate("UserChat", {
+              navigation.navigate("UserChat",
+              {
                 userName: item.user.sent_from_username,
                 sent_to_farm_id: item.user.sent_to_farm_id,
-              })
+                sent_to_farm_email: item.user.sent_to_farm_email
+              }
+              )
             }
           >
             <UserInfo>

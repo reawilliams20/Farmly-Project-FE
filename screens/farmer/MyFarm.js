@@ -4,7 +4,7 @@ import { getFarms } from "../../utils/api";
 import { UserContext } from "../../navigation/user";
 
 const MyFarm = ({navigation}) =>{
-    const {user} = useContext(UserContext)
+    const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
     let myFarm = []
     useEffect(() => {
@@ -19,7 +19,13 @@ const MyFarm = ({navigation}) =>{
                 setFarm(myFarm)
         })
     }, [])
-
+    if(isFirstLaunch == true){
+        return (
+            <View style={styles.container}>
+                <Text>Welcome to Farmly!</Text>
+            </View>
+        )
+    }
     if(farm.length !== 0) {
         return (
             <View style={styles.container}>

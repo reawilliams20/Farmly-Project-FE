@@ -70,7 +70,8 @@ const SingleFarm = ({ route, navigation }) => {
           onPress={() =>
             navigation.navigate("UserChat", {
               farm_id: farm_id,
-              farm_name: farm_name,
+              farm_name: farm.name,
+              farm_username : farm.username
             })
           }
         />

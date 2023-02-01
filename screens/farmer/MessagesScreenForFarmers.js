@@ -48,7 +48,6 @@ const MessagesScreenForFarmers =({navigation})=>{
         const unsubscribe = onSnapshot(q, (snapshot) =>
           setMessages(
             snapshot.docs.map((doc) => (
-              console.log(doc.data(), "inside Messages screen"),
               {
               _id: doc.data()._id,
               createdAt: doc.data().createdAt.toDate(),
@@ -77,10 +76,10 @@ const MessagesScreenForFarmers =({navigation})=>{
           data={unique}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
-           
             <Card
               onPress={() =>
                 navigation.navigate("FarmerChat", {
+                  sent_to_farm_email: user['email'],
                   userName: item.user.sent_from_username,
                   sent_to_farm_id: item.user.sent_to_farm_id,
                 })
