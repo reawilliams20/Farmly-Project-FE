@@ -18,7 +18,11 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "This app uses location to function",
+        "NSLocationAlwaysUsageDescription": "This app uses location to function"
+      }
     },
     "android": {
       "adaptiveIcon": {
