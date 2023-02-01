@@ -15,7 +15,7 @@ const Routes = () => {
       setUser(user);
     });
   }, []);
-  console.log(isFirstLaunch, "inside routers")
+
   return (
     <NavigationContainer>
       {user ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}

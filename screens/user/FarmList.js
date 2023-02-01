@@ -57,8 +57,6 @@ const FarmList = ({ navigation }) => {
   }
 
   return (
-
-
       <View style={styles.container}>
       <Text> List of Farm</Text>
       <FlatList

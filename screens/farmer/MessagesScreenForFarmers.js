@@ -34,8 +34,10 @@ const MessagesScreenForFarmers =({navigation})=>{
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        getFarms().then((response) => {
+        getFarms()
+        .then((response) => {
         setFarms(response);
+       setIsLoading(false)
         });
     }, []);
 
@@ -56,34 +58,39 @@ const MessagesScreenForFarmers =({navigation})=>{
               user: doc.data().user,
             }))
           ),
-          setIsLoading(false),
         );
         return () => {
           unsubscribe();
         };
       }, []);
 
+
       const newMap = new Map(messages.map((m) => [m.user.sent_from_name, m]));
       const unique = [...newMap.values()];
-      console.log(isLoading,"68")
-      
+
+
+     
       if (isLoading===true) {
         return (
           <>
-          <View >
-            <Text>{"I am obsessed with perfection. I want to work. I don't want to take this for granted."}</Text>
+          <View style={styles.container}>
+            <Text>
+            I am obsessed with perfection. I want to work. I don't want to take this for granted.
             {`\n`}
-            <Text>{"--Team Ditto"}</Text>
+            --Team Ditto</Text>
             <Image
-            style ={{width: "100%", height:"80%"}}
-            source= {{uri:"https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"}}>
+            style={{ width: "10%", height: "10%" , alignItems: "center",
+            justifyContent: "center",}}
+            source={require("../../gif/1477.png")}
+            >
             </Image>
           </View>
           </>
         )
       }
+      
 
-      if (messages.length ===0) return (
+      if ( messages.length ===0) return (
         <View style={styles.container}>
         <Text>{"You have no messages!"}</Text>
       </View>
