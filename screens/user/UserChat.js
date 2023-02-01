@@ -14,6 +14,7 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
+//import Load from "react-native-loading-gif";
 import { UserContext } from "../../navigation/user";
 
 const UserChat = ({ navigation, route }) => {
@@ -21,6 +22,7 @@ const UserChat = ({ navigation, route }) => {
   const [farms, setFarms] = useState([]);
   const { farm_id, farm_username, sent_to_farm_id, sent_to_farm_email } =
     route.params;
+  const [isLoading, setIsLoading] = useState(true)
   const { user } = useContext(UserContext);
 
   const q = query(collection(db, "chats"), orderBy("createdAt", "desc"));
@@ -46,7 +48,8 @@ const UserChat = ({ navigation, route }) => {
           text: doc.data().text,
           user: doc.data().user,
         }))
-      )
+      ),
+      // setIsLoading(false)
     );
     return () => {
       unsubscribe();
@@ -73,6 +76,7 @@ const UserChat = ({ navigation, route }) => {
 
   useEffect(() => {
     setMessages([]);
+    setIsLoading(false);
   }, []);
   const onSend = useCallback((validMessages = []) => {
     setMessages((previousMessages) =>
@@ -86,10 +90,19 @@ const UserChat = ({ navigation, route }) => {
     return msg.user.sent_from_username === auth.currentUser.email;
   });
   useEffect(() => {
-    getFarmById(sent_to_farm_id || farm_id).then((response) => {
+    getFarmById(sent_to_farm_id || farm_id)
+    .then((response) => {
       setFarms(response);
     });
   }, [sent_to_farm_id || farm_id]);
+
+  if (isLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>`Searching for chats...` </Text>
+      </View>
+    )
+  }
 
   return (
     <>

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button } from "react-native";
+import { View, Text, StyleSheet, Image, Button, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { getFarmById, getProduce } from "../../utils/api";
 import { FlatList } from "react-native";
@@ -27,7 +27,7 @@ const SingleFarm = ({ route, navigation }) => {
   return isLoading ? (<View style={styles.container}><Text>Loading...</Text></View>)
   :(
       <View style={styles.container}>
-        <Button
+        <Pressable
           title="Back"
           onPress={() => {
             navigation.navigate("FarmList");
@@ -67,7 +67,7 @@ const SingleFarm = ({ route, navigation }) => {
             );
           }}
         />
-        <Button
+        <Pressable
           title="Message the farm"
           onPress={() =>
             navigation.navigate("UserChat", {
