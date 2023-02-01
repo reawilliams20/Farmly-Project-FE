@@ -1,5 +1,5 @@
 import React, { useCallback, useContext,useLayoutEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import { useEffect, useState } from "react";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
@@ -27,7 +27,7 @@ const FarmerChat = ({navigation, route}) =>{
         navigation.setOptions({
           headerLeft: () => (
             <View style={{ marginLeft: 20 }}>
-              <Avatar
+              <Image
                 rounded
                 source={{
                   uri: auth?.currentUser?.photoURL,
