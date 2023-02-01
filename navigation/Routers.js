@@ -16,7 +16,6 @@ const Routes = () => {
         setUser(user)
     });
   }, []);
-  console.log(user, "inside routers")
   return (
     <NavigationContainer>
       {(isLoggedIn && user) ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}

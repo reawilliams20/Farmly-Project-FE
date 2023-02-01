@@ -1,5 +1,5 @@
 import React, {useContext, useState, useLayoutEffect, useEffect} from "react";
-import { View, Text, StyleSheet,FlatList } from "react-native";
+import { View, Text, StyleSheet,FlatList, Image } from "react-native";
 import { UserContext } from "../../navigation/user";
 import { getFarms } from "../../utils/api";
 import { auth, db } from "../../firebase";
@@ -31,10 +31,13 @@ const MessagesScreenForFarmers =({navigation})=>{
     const [farms, setFarms] = useState([]);
     const [messages, setMessages] = useState([]);
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        getFarms().then((response) => {
+        getFarms()
+        .then((response) => {
         setFarms(response);
+       setIsLoading(false)
         });
     }, []);
 
@@ -54,17 +57,40 @@ const MessagesScreenForFarmers =({navigation})=>{
               text: doc.data().text,
               user: doc.data().user,
             }))
-          )
+          ),
         );
         return () => {
           unsubscribe();
         };
       }, []);
 
+
       const newMap = new Map(messages.map((m) => [m.user.sent_from_name, m]));
       const unique = [...newMap.values()];
 
-      if (messages.length ===0) return (
+
+     
+      if (isLoading===true) {
+        return (
+          <>
+          <View style={styles.container}>
+            <Text>
+            I am obsessed with perfection. I want to work. I don't want to take this for granted.
+            {`\n`}
+            --Team Ditto</Text>
+            <Image
+            style={{ width: "10%", height: "10%" , alignItems: "center",
+            justifyContent: "center",}}
+            source={require("../../gif/1477.png")}
+            >
+            </Image>
+          </View>
+          </>
+        )
+      }
+      
+
+      if ( messages.length ===0) return (
         <View style={styles.container}>
         <Text>{"Your messages will appear here..."}</Text>
       </View>
