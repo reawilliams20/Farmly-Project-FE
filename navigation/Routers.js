@@ -9,13 +9,13 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 const Stack = createNativeStackNavigator();
 const Routes = () => {
-  const { user, setUser , type } = useContext(UserContext);
+  const { user, setUser , type, isFirstLaunch} = useContext(UserContext);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
       setUser(user);
     });
   }, []);
- 
+  console.log(isFirstLaunch, "inside routers")
   return (
     <NavigationContainer>
       {user ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}

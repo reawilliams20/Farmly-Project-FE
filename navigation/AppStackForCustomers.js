@@ -21,6 +21,16 @@ function FarmStack() {
   );
 }
 
+function MessagesStack(){
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="MessagesScreen" component={MessagesScreen} />
+      <Stack.Screen name="UserChat" component={UserChat} />
+    </Stack.Navigator>
+  )
+}
+
+
 const AppStackForCustomers = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -39,7 +49,7 @@ const AppStackForCustomers = () => {
       />
       <Tab.Screen
         name="Messages"
-        component={MessagesScreen}
+        component={MessagesStack}
         options={{
           tabBarIcon: ({ color, size }) => (
             <Ionicons
@@ -54,7 +64,6 @@ const AppStackForCustomers = () => {
         name="Setting"
         component={SettingScreen}
         options={{
-          // tabBarLabel: 'Home',
           tabBarIcon: ({ color, size }) => (
             <Ionicons name="person-outline" color={color} size={size} />
           ),
