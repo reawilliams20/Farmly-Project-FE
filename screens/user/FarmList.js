@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-
-import { View, Text, StyleSheet, FlatList, ScrollView, Image } from "react-native";
-import { Card } from "react-native-elements";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
 import { getFarms, patchFarmDistanceById } from "../../utils/api";
 import * as Location from 'expo-location';
 import { distanceCalculator } from "../../utils/utils";
+import { shadow } from "react-native-paper";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
@@ -57,36 +56,30 @@ const FarmList = ({ navigation }) => {
   }
 
   return (
-
-
       <View style={styles.container}>
-      <Text> List of Farm</Text>
-      <FlatList
-        data={farms}
-        renderItem={({ item }) => {
-          return (
-            <Card style={styles.card}>
-              <Text 
-              onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id,farm_name: item.name})}
-              style={styles.baseText} >
-                <Text
-                style={styles.titleText}>
-                  {item.name}
+        <FlatList
+          data={farms}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>
+                  <Image
+                  style={styles.cardImage}
+                  source={{uri: item.profile_pic}}
+                  />
+                <Text 
+                style={styles.baseText} >
+                  <Text
+                  style={styles.titleText}>
+                    {item.name}
+                  </Text>
+                  {`\n`}
+                  {item.distance_from_location} km away
                 </Text>
-                {`\n`}
-                {item.distance_from_location} km away
-              </Text>
-               <Image
-                style={styles.Logo}
-                source={{uri: item.profile_pic}}
-                />
-            </Card>
-          );
-        }}
-      />
+              </TouchableOpacity>
+            );
+          }}
+        />
     </View>
-
-    
   );
 };
 
@@ -101,22 +94,32 @@ const styles = StyleSheet.create({
   card: {
     flex: 1,
     justifyContent: "center",
-    flexDirection: "row",
+    flexDirection: "column",
+    backgroundColor: "white",
+    alignItems: "center",
+    margin: 24,
+    marginBottom: 0,
+    borderRadius: 8,
+    shadowColor: "black",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 5
   },
-  Logo: {
-    width: 100,
-    height: 100,
-    borderRadius: 100/2,
+  cardImage: {
+    width: 327,
+    height: 150,
     overflow: "hidden",
-    borderWidth: 3,
-    borderColor: "black",
+    borderTopRightRadius: 8,
+    borderTopLeftRadius: 8
   },
   baseText: {
     fontSize: 16,
-    textAlign: "left"
+    textAlign: "center",
+    padding: 8,
   },
   titleText: {
     fontSize: 20,
     fontWeight: 'bold',
+    padding: 8
   },
 });

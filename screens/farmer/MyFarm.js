@@ -34,20 +34,22 @@ const MyFarm = ({navigation}) =>{
             <View style={styles.container}>
                 <Text> Loading... </Text>
             </View>
-            ) :
-            (
-                <View style={styles.container}>
-                    <Text>{farm[0].name}</Text>
-                    <Text>{farm[0].address.street}</Text>
-                    <Text>{farm[0].address.town}</Text>
-                    <Text>{farm[0].address.county}</Text>
-                    <Text>{farm[0].address.postcode}</Text>
-                    <Text>{farm[0].address.country}</Text>
-                    <Text>{farm[0].description}</Text>
-                    <Image source={{uri:`${farm[0].profile_pic}`}}
-                    style={{width: 400, height: 200}}/>
-                </View>
-            )
+      )
+      :
+      (
+        <View style={styles.container}>
+                <Image source={{uri:`${farm[0].profile_pic}`}}
+                style={{width: 400, height: 200}}/>
+                <Text>{farm[0].name}</Text>
+                <Text>{farm[0].address.street}</Text>
+                <Text>{farm[0].address.town}</Text>
+                <Text>{farm[0].address.county}</Text>
+                <Text>{farm[0].address.postcode}</Text>
+                <Text>{farm[0].address.country}</Text>
+                <Text>{farm[0].description}</Text>
+          </View>
+       )
+
     }
 }
 
