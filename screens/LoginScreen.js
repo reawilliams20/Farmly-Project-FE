@@ -11,7 +11,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  let { signin, type, setType , user, setUser, isFirstLaunch, setIsFirstLaunch }= useContext(UserContext)
+  let { signin, type, setType , user, setUser, isFirstLaunch, setIsFirstLaunch, isLoggedIn, setIsLoggedIn}= useContext(UserContext)
 
     useEffect(() => {
       getFarms()
@@ -28,9 +28,11 @@ const LoginScreen = ({ navigation }) => {
       if(validEmail.length !==0){
         setIsFirstLaunch(false)
         setType("farmer")
+        setIsLoggedIn(true)
       }else{
         setIsFirstLaunch(false)
         setType("customer")
+        setIsLoggedIn(true)
       }
   }
 
