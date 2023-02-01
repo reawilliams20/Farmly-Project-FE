@@ -25,8 +25,10 @@ const LoginScreen = ({ navigation }) => {
         farm.username.toUpperCase() == username.toUpperCase()
         )
       if(validEmail.length !==0){
+        setIsFirstLaunch(false)
         setType("farmer")
       }else{
+        setIsFirstLaunch(false)
         setType("customer")
       }
   }
