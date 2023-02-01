@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, FlatList, Image } from "react-native";
+import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react-native";
 import { getFarms, patchFarmDistanceById } from "../../utils/api";
 import * as Location from 'expo-location';
 import { distanceCalculator } from "../../utils/utils";
+import { shadow } from "react-native-paper";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
@@ -60,13 +61,12 @@ const FarmList = ({ navigation }) => {
           data={farms}
           renderItem={({ item }) => {
             return (
-              <View style={styles.card}>
+              <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>
                   <Image
                   style={styles.cardImage}
                   source={{uri: item.profile_pic}}
                   />
                 <Text 
-                onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}
                 style={styles.baseText} >
                   <Text
                   style={styles.titleText}>
@@ -75,7 +75,7 @@ const FarmList = ({ navigation }) => {
                   {`\n`}
                   {item.distance_from_location} km away
                 </Text>
-              </View>
+              </TouchableOpacity>
             );
           }}
         />
@@ -99,7 +99,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
     margin: 24,
     marginBottom: 0,
-    borderRadius: 8
+    borderRadius: 8,
+    shadowColor: "black",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 5
   },
   cardImage: {
     width: 327,
