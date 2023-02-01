@@ -17,6 +17,7 @@ const ProduceList = ({ navigation }) => {
   const [unit, setUnit] = useState('')
   const [description, setDescription] = useState('')
   const [pic, setPic] = useState('')
+  const [isLoading, setIsLoading] = useState(true)
 
   const categories = [
     { label: 'fruits', value: 'fruits' },
@@ -27,6 +28,7 @@ const ProduceList = ({ navigation }) => {
   useEffect(() => {
     getProduce().then((response) => {
       setProduce(response);
+      setIsLoading(false)
     });
     getFarms().then((response) => {
       setFarms(response)
@@ -89,7 +91,13 @@ const ProduceList = ({ navigation }) => {
     })
   }
 
-  return (
+    return isLoading ? (
+      <View style={styles.container}>
+        <Text> Loading... </Text>
+      </View>
+    )
+    :
+    (
     <View style={styles.container}>
       <Pressable style={styles.add} onPress={()=> setShouldShow(!shouldShow)}>
       <Text style={styles.content}>+</Text>

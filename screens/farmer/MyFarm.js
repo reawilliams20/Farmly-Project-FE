@@ -6,6 +6,8 @@ import { UserContext } from "../../navigation/user";
 const MyFarm = ({navigation}) =>{
     const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
+
     let myFarm = []
     useEffect(() => {
         getFarms()
@@ -17,6 +19,7 @@ const MyFarm = ({navigation}) =>{
         })
         .then(() => {
                 setFarm(myFarm)
+                setIsLoading(false)
         })
     }, [])
     if(isFirstLaunch == true){
@@ -26,20 +29,25 @@ const MyFarm = ({navigation}) =>{
             </View>
         )
     }
-    if(farm.length !== 0) {
-        return (
+    else {
+        return isLoading ? (
             <View style={styles.container}>
-                <Text>{farm[0].name}</Text>
-                <Text>{farm[0].address.street}</Text>
-                <Text>{farm[0].address.town}</Text>
-                <Text>{farm[0].address.county}</Text>
-                <Text>{farm[0].address.postcode}</Text>
-                <Text>{farm[0].address.country}</Text>
-                <Text>{farm[0].description}</Text>
-                <Image source={{uri:`${farm[0].profile_pic}`}}
-                style={{width: 400, height: 200}}/>
+                <Text> Loading... </Text>
             </View>
-        )
+            ) :
+            (
+                <View style={styles.container}>
+                    <Text>{farm[0].name}</Text>
+                    <Text>{farm[0].address.street}</Text>
+                    <Text>{farm[0].address.town}</Text>
+                    <Text>{farm[0].address.county}</Text>
+                    <Text>{farm[0].address.postcode}</Text>
+                    <Text>{farm[0].address.country}</Text>
+                    <Text>{farm[0].description}</Text>
+                    <Image source={{uri:`${farm[0].profile_pic}`}}
+                    style={{width: 400, height: 200}}/>
+                </View>
+            )
     }
 }
 

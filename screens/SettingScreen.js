@@ -10,6 +10,7 @@ import { getUsers } from "../utils/api";
 const SettingScreen = ({navigation}) =>{
     let { user, isLoggedIn, type }= useContext(UserContext)
     const [account, setAccount] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
     let myAccount = []
 
     const signOutNow = () => {
@@ -34,12 +35,18 @@ const SettingScreen = ({navigation}) =>{
         })
         .then(() => {
             setAccount(myAccount)
+            setIsLoading(false)
         })
     }, [])
 
 
-    if(account.length !== 0) {
-        return (
+        return isLoading ? (
+            <View style={styles.container}>
+                <Text>Loading...</Text>
+            </View>
+        )
+        :
+        (
             <View style={styles.container}>
             <Image source={{uri:`${account[0].profile_pic}`}}
                 style={{width: 400, height: 200}}/>
@@ -55,7 +62,6 @@ const SettingScreen = ({navigation}) =>{
             />
             </View>
           )
-    }
     
 }
 
