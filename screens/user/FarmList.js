@@ -3,55 +3,85 @@ import { View, Text, StyleSheet, FlatList, Image, TouchableOpacity } from "react
 import { getFarms, patchFarmDistanceById } from "../../utils/api";
 import * as Location from 'expo-location';
 import { distanceCalculator } from "../../utils/utils";
-import { shadow } from "react-native-paper";
 
 const FarmList = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
   const [currentLocation, setCurrentLocation] = useState(null)
-  const [currentLat, setCurrentLat] = useState(null)
-  const [currentLon, setCurrentLon] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [permission, setPermission] = useState(false)
 
   useEffect(() => {
 
-    (async () => {
-      let {status} = Location.requestForegroundPermissionsAsync()
-      if (status === "granted"){
-        console.log("yes")
+    const getPermissions = async () => {
+      setLoading(true)
+      let {status} = await Location.requestForegroundPermissionsAsync()
+      if (status !== "granted") {
+        setLoading(false)
+        setPermission(false)
       } else {
-        console.log("no")
+        setPermission(true)
+        let location = await Location.getCurrentPositionAsync({})
+        setCurrentLocation(location)
       }
+      return status
+    }
 
-      let location = await Location.getCurrentPositionAsync({})
-      setCurrentLocation(location)
-      setCurrentLat(location.coords.latitude)
-      setCurrentLon(location.coords.longitude)
+    const getFarmsDistance = async () => {
+      getFarms()
+      .then((response) => {
+        setFarms(response)
+      })
+      .then(() => {
+          farms.forEach((farm) => {
+              distanceCalculator(currentLocation.coords.latitude, currentLocation.coords.longitude, farm.address.postcode)
+              .then((res) => {
+                patchFarmDistanceById(farm.farm_id, res)
+              })
+          })
+      })        
+    }
+
+    getPermissions()
+    .then(() => {
+      getFarmsDistance()
       setLoading(false)
-    })()
-  
-    getFarms()
-    .then((response) => {
-      setFarms(response)
     })
-    
+     
   }, []);
 
-  if (farms.length > 0) {
-    if (currentLat && currentLon !== null) {
-      farms.forEach((farm) => {
-        distanceCalculator(currentLat, currentLon, farm.address.postcode)
-        .then((res) => {
-          patchFarmDistanceById(farm.farm_id, res)
-        })
-      })
-    }
-  } 
 
   if (loading) {
     return (
       <View>
         <Text>Calculating your closest farms...</Text>
       </View>
+    )
+  }
+
+  if (!permission) {
+    return (
+      <View style={styles.container}>
+      <FlatList
+        data={farms}
+        renderItem={({ item }) => {
+          return (
+            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>
+                <Image
+                style={styles.cardImage}
+                source={{uri: item.profile_pic}}
+                />
+              <Text 
+              style={styles.baseText} >
+                <Text
+                style={styles.titleText}>
+                  {item.name}
+                </Text>
+              </Text>
+            </TouchableOpacity>
+          );
+        }}
+      />
+    </View>
     )
   }
 
