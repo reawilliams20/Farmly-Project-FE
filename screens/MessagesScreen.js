@@ -1,5 +1,5 @@
 import React, { useContext, useState, useLayoutEffect, useEffect } from "react";
-import { View, Text, StyleSheet, FlatList } from "react-native";
+import { View, Text, StyleSheet, FlatList ,Image} from "react-native";
 import { Button } from "react-native-elements";
 import { UserContext } from "../navigation/user";
 import {
@@ -11,6 +11,7 @@ import {
   onSnapshot,
   where,
 } from "firebase/firestore";
+// import Load from "react-native-loading-gif";
 import { getFarms } from "../utils/api";
 import { auth, db } from "../firebase";
 import {
@@ -30,7 +31,7 @@ const MessagesScreen = ({ navigation }) => {
   const [farms, setFarms] = useState([]);
   const [messages, setMessages] = useState([]);
   const { user } = useContext(UserContext);
-
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getFarms().then((response) => {
@@ -60,13 +61,15 @@ const MessagesScreen = ({ navigation }) => {
           text: doc.data().text,
           user: doc.data().user,
         }))
-      )
+      ),    
+      setIsLoading(false),
     );
-    return () => {
+
+    return () => {    
       unsubscribe();
     };
   }, []);
-
+  console.log(isLoading, "insidde messages screen")
   const msgFromUser = messages.filter((message) => {
     return message.user.sent_from_username == user["email"];
   });
@@ -74,6 +77,19 @@ const MessagesScreen = ({ navigation }) => {
   const newMap = new Map(msgFromUser.map((m) => [m.user.sent_to_farm_id, m]));
   const unique = [...newMap.values()];
 
+  if (isLoading===true) {
+    return (
+      <View style={styles.container}>
+        <Text>I am obsessed with perfection. I want to work. I don't want to take this for granted.</Text>
+        {`\n`}
+        <Text>--Team Ditto</Text>
+        <Image
+        style ={{width: "100%", height:"80%"}}
+        source= {{uri:"https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"}}>
+        </Image>
+      </View>
+    )
+  }
   if (unique.length === 0) {
     return (
       <View style={styles.container}>

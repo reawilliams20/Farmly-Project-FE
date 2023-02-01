@@ -35,6 +35,7 @@ const AppStackForCustomers = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
+        initiaRouteName= "Farms"
         name="Farms"
         component={FarmStack}
         options={({ route }) => ({

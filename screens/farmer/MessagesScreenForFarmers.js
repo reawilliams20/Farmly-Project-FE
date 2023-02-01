@@ -1,5 +1,5 @@
 import React, {useContext, useState, useLayoutEffect, useEffect} from "react";
-import { View, Text, StyleSheet,FlatList } from "react-native";
+import { View, Text, StyleSheet,FlatList, Image } from "react-native";
 import { UserContext } from "../../navigation/user";
 import { getFarms } from "../../utils/api";
 import { auth, db } from "../../firebase";
@@ -31,6 +31,7 @@ const MessagesScreenForFarmers =({navigation})=>{
     const [farms, setFarms] = useState([]);
     const [messages, setMessages] = useState([]);
     const { user } = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         getFarms().then((response) => {
@@ -54,7 +55,8 @@ const MessagesScreenForFarmers =({navigation})=>{
               text: doc.data().text,
               user: doc.data().user,
             }))
-          )
+          ),
+          setIsLoading(false),
         );
         return () => {
           unsubscribe();
@@ -63,6 +65,23 @@ const MessagesScreenForFarmers =({navigation})=>{
 
       const newMap = new Map(messages.map((m) => [m.user.sent_from_name, m]));
       const unique = [...newMap.values()];
+      console.log(isLoading,"68")
+      
+      if (isLoading===true) {
+        return (
+          <>
+          <View >
+            <Text>{"I am obsessed with perfection. I want to work. I don't want to take this for granted."}</Text>
+            {`\n`}
+            <Text>{"--Team Ditto"}</Text>
+            <Image
+            style ={{width: "100%", height:"80%"}}
+            source= {{uri:"https://upload.wikimedia.org/wikipedia/commons/b/b1/Loading_icon.gif?20151024034921"}}>
+            </Image>
+          </View>
+          </>
+        )
+      }
 
       if (messages.length ===0) return (
         <View style={styles.container}>
