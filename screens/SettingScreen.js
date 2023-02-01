@@ -9,6 +9,7 @@ import { getUsers, updateUserById } from "../utils/api";
 const SettingScreen = ({navigation}) =>{
     let { user, isLoggedIn, type }= useContext(UserContext)
     const [account, setAccount] = useState([]);
+    const [isLoading, setIsLoading] = useState(true)
     let myAccount = []
     const [isEditable, setIsEditable] = useState(false);
     const auth = getAuth();
@@ -25,7 +26,7 @@ const SettingScreen = ({navigation}) =>{
         .then(() => {
             setAccount(myAccount)
             setId(account[0].user_id)
-            console.log(account[0].profile_pic)
+            setIsLoading(false)
         })
     }, [])
 
@@ -67,7 +68,7 @@ const SettingScreen = ({navigation}) =>{
             const updateBody = {
                 password: password
             }
-        updateUserById
+            updateUserById(id, updateBody)
         })
         .catch((error) => {
         // An error ocurred 
@@ -128,8 +129,13 @@ const SettingScreen = ({navigation}) =>{
           
     };
 
-    if(account.length !== 0) {
-        return (
+        return isLoading ? (
+            <View style={styles.container}>
+                <Text>Loading...</Text>
+            </View>
+        )
+        :
+        (
             <View style={styles.container}>
             <Image 
             style={styles.Logo}
@@ -158,7 +164,6 @@ const SettingScreen = ({navigation}) =>{
             />
             </View>
           )
-    }
     
 }
 

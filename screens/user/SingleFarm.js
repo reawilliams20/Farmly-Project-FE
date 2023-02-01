@@ -9,6 +9,7 @@ const SingleFarm = ({ route, navigation }) => {
   const { farm_id } = route.params;
   const [farm, setFarm] = useState([]);
   const [produce, setProduce] = useState([]);
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     getFarmById(farm_id).then((response) => {
@@ -16,14 +17,15 @@ const SingleFarm = ({ route, navigation }) => {
     });
     getProduce().then((response) => {
       setProduce(response);
+      setIsLoading(false)
     });
   }, []);
   const produceInStock = produce.filter((item) => {
     return item.farm_id === farm_id;
   });
 
-  if (farm.length !== 0) {
-    return (
+  return isLoading ? (<View style={styles.container}><Text>Loading...</Text></View>)
+  :(
       <View style={styles.container}>
         <Button
           title="Back"
@@ -76,8 +78,8 @@ const SingleFarm = ({ route, navigation }) => {
           }
         />
       </View>
-    );
-  }
+    )
+
 };
 
 export default SingleFarm;

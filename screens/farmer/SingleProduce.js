@@ -6,10 +6,12 @@ const SingleProduce = ({route, navigation}) =>{
     const [oneProduce, setOneProduce] = useState({})
     const {produce_id} = route.params
     const [isEditable, setIsEditable] = useState(false);
+    const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
         getProduceById(produce_id).then((produce) => {
             setOneProduce(produce)
+            setIsLoading(false)
         })
     }, [oneProduce])
     const produce = {...oneProduce}
@@ -49,7 +51,8 @@ const SingleProduce = ({route, navigation}) =>{
             })
             
     }
-        return (
+        return isLoading ? (<View style={styles.container}><Text>Loading...</Text></View>)
+        :(
             <View style={styles.container}>
             <FlatList
             data = {oneProduce}

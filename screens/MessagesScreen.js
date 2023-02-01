@@ -77,7 +77,7 @@ const MessagesScreen = ({ navigation }) => {
   if (unique.length === 0) {
     return (
       <View style={styles.container}>
-        <Text>{"You have no messages!"}</Text>
+        <Text>{"Your messages will appear here..."}</Text>
       </View>
     );
   }
