@@ -25,8 +25,10 @@ const SettingScreen = ({navigation}) =>{
         })
         .then(() => {
             setAccount(myAccount)
-            setId(account[0].user_id)
             setIsLoading(false)
+            if(account.length !== 0){
+            setId(account[0].user_id)
+            }
         })
     }, [])
 

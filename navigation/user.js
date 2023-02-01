@@ -7,7 +7,7 @@ export const UserContext = createContext();
 
 export const UserProvider= ({children}) =>{
     const [user,setUser] = useState({})
-    const isLoggedIn = user==null;
+    const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [type, setType] = useState('')
     const [isFirstLaunch, setIsFirstLaunch] = useState(null);
 
@@ -17,6 +17,7 @@ return (
         user, 
         setUser, 
         isLoggedIn,
+        setIsLoggedIn,
         type, 
         setType,
         isFirstLaunch,
