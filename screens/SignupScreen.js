@@ -173,7 +173,6 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#F5EEDC',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 12

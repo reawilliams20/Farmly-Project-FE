@@ -200,11 +200,11 @@ const MyFarm = ({navigation}) => {
                 <Image source={{uri:`${farm[0].profile_pic}`}}
                 style={{width: 400, height: 200}}/>
                 <TextInput style={styles.input} placeholder={farm.name} editable={isEditable} onChangeText={name => setName(name)}>{farm[0].name}</TextInput>
-                <Text>{farm[0].address.street}</Text>
-                <Text>{farm[0].address.town}</Text>
-                <Text>{farm[0].address.county}</Text>
-                <Text>{farm[0].address.postcode}</Text>
-                <Text>{farm[0].address.country}</Text>
+                <Text style={styles.text}>{farm[0].address.street}</Text>
+                <Text style={styles.text}>{farm[0].address.town}</Text>
+                <Text style={styles.text}>{farm[0].address.county}</Text>
+                <Text style={styles.text}>{farm[0].address.postcode}</Text>
+                <Text style={styles.text}>{farm[0].address.country}</Text>
                 <TextInput multiline={true} numberOfLines={3} style={styles.input} placeholder={farm.description} editable={isEditable} onChangeText={description => setNewDescription(description)}>{farm[0].description}</TextInput>
                 <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editFarm(e)} />
                     {isEditable ? (<Button title="Save" onPress={updateFarm} />) :null }
@@ -218,24 +218,31 @@ const MyFarm = ({navigation}) => {
 export default MyFarm;
 
 const styles= StyleSheet.create({
-    container:{
-        padding: 60,
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'#8fcbbc'
-    },
-    input:{
-        margin: 10,
-        borderBottomColor: "solid grey",
-        borderBottomWidth: 0.5,
-        padding: 10,
-    },
-    add: {
+  container:{
+    padding: 60,
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#B6EBA6'
+  },
+  input:{
+    margin: 10,
+    borderBottomColor: "solid grey",
+    borderBottomWidth: 0.5,
+    padding: 10,
+    fontSize:25,
+    fontStyle:'italic'
+  },
+  add: {
     backgroundColor: "blue",
     padding: 10,
     borderRadius: 5,
   },
+  text:{
+    borderBottomColor: "solid grey",
+    borderBottomWidth: 0.5,
+    fontSize:15,
+  }
 })
 
 

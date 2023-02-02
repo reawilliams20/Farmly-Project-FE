@@ -142,13 +142,13 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#8fcbbc",
+    backgroundColor: '#B6EBA6',
   },
   area: {
     padding: 80,
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#8fcbbc",
+    backgroundColor:'#B6EBA6',
   },
 });
