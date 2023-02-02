@@ -75,9 +75,9 @@ const SingleFarm = ({ route, navigation }) => {
               />
             </View>
           </View>
-
+              
           {/* List of Produce */}
-          {produce.map((item) => {
+          {produceInStock.map((item) => {
             return (
               <View style={styles.produceCard}>
                 <View style={styles.produceWriting}>
