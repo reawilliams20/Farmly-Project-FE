@@ -4,6 +4,8 @@ import { UserContext } from "../../navigation/user";
 import { getFarms } from "../../utils/api";
 import { auth, db } from "../../firebase";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
+import { Avatar } from 'react-native-paper';
+
 import {
     collection,
     addDoc,
@@ -112,13 +114,10 @@ const MessagesScreenForFarmers =({navigation})=>{
               }
             >
               <UserInfo>
-                <UserImgWrapper>
-                  <UserImg source={item.user.avatar} />
-                </UserImgWrapper>
+              <Avatar.Image size={60} source={{uri: item.user.avatar}} />
                 <TextSection>
                   <UserInfoText>
                     <UserName>{item.user.sent_from_name}</UserName>
-                    {/* <PostTime>{item.messageTime}</PostTime> */}
                   </UserInfoText>
                   <MessageText>{item.text}</MessageText>
                 </TextSection>
@@ -140,7 +139,7 @@ const styles= StyleSheet.create({
         backgroundColor:'#8fcbbc'
     },
     area: {
-      padding: 60,
+      padding: 80,
       flex: 1,
       alignItems: "center",
       justifyContent: "center",

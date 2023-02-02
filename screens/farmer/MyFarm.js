@@ -3,33 +3,25 @@ import { View, Text, StyleSheet, Image, TextInput, Button, Pressable } from "rea
 import { getFarms, patchFarmById, getUsers, postFarm  } from "../../utils/api";
 
 import { UserContext } from "../../navigation/user";
-import { TextInput } from "react-native-paper";
 import { FlatList, ScrollView } from "react-native-web";
 
-const MyFarm = ({navigation}) =>{
+const MyFarm = ({navigation}) => {
     const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-    const [isEditable, setIsEditable] = useState(false);
 
+    const [shouldShow, setShouldShow] = useState(false);
+    const [newFarmName, setNewFarmName] = useState("");
+    const [profile_pic, setProfilePic] = useState("");
+    const [description, setDescription] = useState("");
+    const [street, setStreet] = useState("")
+    const [town, setTown] = useState('')
+    const [county, setCounty] = useState('')
+    const [postcode, setPostcode] = useState('')
+    const [country, setCountry] = useState('')
+    const [isEditable, setIsEditable] = useState(false);
     const [name, setName] = useState(farm.name)
     const [newDescription, setNewDescription] = useState(farm.description)
-
-  const { user, isFirstLaunch } = useContext(UserContext);
-  const [farm, setFarm] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [shouldShow, setShouldShow] = useState(false);
-  const [newFarmName, setNewFarmName] = useState("");
-  const [profile_pic, setProfilePic] = useState("");
-  const [description, setDescription] = useState("");
-  const [street, setStreet] = useState("")
-  const [town, setTown] = useState('')
-  const [county, setCounty] = useState('')
-  const [postcode, setPostcode] = useState('')
-  const [country, setCountry] = useState('')
-  const [isEditable, setIsEditable] = useState(false);
-  const [name, setName] = useState(farm.name)
-  const [newDescription, setNewDescription] = useState(farm.description)
 
 
 
@@ -231,6 +223,7 @@ const MyFarm = ({navigation}) =>{
 
     }
 }
+}
 
 export default MyFarm;
 
@@ -254,4 +247,5 @@ const styles= StyleSheet.create({
     borderRadius: 5,
   },
 })
+
 
