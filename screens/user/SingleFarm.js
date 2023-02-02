@@ -24,46 +24,43 @@ const SingleFarm = ({ route, navigation }) => {
   if (farm.length !== 0) {
     return (
       <View style={styles.container}>
-    
-          <ScrollView>
+        <ScrollView>
+          {/* Back button at the top of the screen */}
           <View style={styles.backButton}>
-          <Button
-            title="Back"
-            onPress={() => {navigation.navigate("FarmList");}}>
-          </Button>
-        </View>
-        <View style= {styles.farmInfo}>
-          <Image
-            source={{ uri: `${farm.profile_pic}` }}
-            style={styles.cardImage}
-          />
-          <Text style={styles.titleText}>
-            {farm.name}
-          </Text>
-          <View style={styles.baseText}>
-            <Text
-              style={styles.subTitle}>
+            <Button
+              title="Back"
+              onPress={() => {navigation.navigate("FarmList");}}>
+            </Button>
+          </View>
+
+          {/* Farm info card */}
+          <View style= {styles.farmInfo}>
+            <Image source={{ uri: `${farm.profile_pic}` }} style={styles.cardImage}/>
+            <Text style={styles.titleText}>
+              {farm.name}
+            </Text>
+            <View style={styles.baseText}>
+              <Text style={styles.subTitle}>
                 Address
-            </Text>
-            <Text style={styles.address}>
-            {farm.address.street},
-            {`\n`}
-            {farm.address.town},
-            {`\n`}
-            {farm.address.county},
-            {`\n`}
-            {farm.address.postcode},
-            {`\n`}
-            {farm.address.country}
-            {`\n`}
-            </Text>
-            <Text
-              style={styles.subTitle}>
+              </Text>
+              <Text style={styles.address}>
+                {farm.address.street},
+                {`\n`}
+                {farm.address.town},
+                {`\n`}
+                {farm.address.county},
+                {`\n`}
+                {farm.address.postcode},
+                {`\n`}
+                {farm.address.country}
+                {`\n`}
+              </Text>
+              <Text style={styles.subTitle}>
                 Description
-            </Text>
-            <Text style={styles.description}>
-              {farm.description}
-            </Text>
+              </Text>
+              <Text style={styles.description}>
+                {farm.description}
+              </Text>
             </View>
             <View style={styles.button}>
               <Button
@@ -78,22 +75,31 @@ const SingleFarm = ({ route, navigation }) => {
               />
             </View>
           </View>
-            {produce.map((item) => {
-                 return (
-                  <View style={styles.produceCard}>
-                    <Text>{item.name}:</Text>
-                    <Text>
-                      £{item.price}/per {item.unit}
-                    </Text>
-                    <Image
-                      source={{ uri: `${item.produce_pic}` }}
-                      style={{ width: 100, height: 50 }}
-                    />
-                    <Text>{item.description}</Text>
-                  </View>
-                );
-              })}
-          </ScrollView>
+
+          {/* List of Produce */}
+          {produce.map((item) => {
+            return (
+              <View style={styles.produceCard}>
+                <View style={styles.produceWriting}>
+                  <Text style={styles.produceSubTitle}>
+                    {item.name}:
+                  </Text>
+                  <Text>
+                    Price: £{item.price}/per {item.unit}
+                    {`\n`} 
+                  </Text>
+                  <Text>
+                    Description:
+                    {`\n`} 
+                    {item.description}
+                  </Text>
+                </View>
+                <Image source={{ uri: `${item.produce_pic}` }} style={styles.produceImage}/>
+              </View>
+            );
+          })}
+          
+        </ScrollView>
       </View>
     );
   }
@@ -117,7 +123,7 @@ const styles = StyleSheet.create({
   baseText: {
     fontSize: 16,
     textAlign: "center",
-    padding: 8,
+    padding: 4,
   },
   address: {
     padding: 4,
@@ -126,7 +132,6 @@ const styles = StyleSheet.create({
   subTitle: {
     fontSize: 18,
     fontWeight: 'bold',
-    paddingTop: 8,
     textAlign: "center",
   },
   description: {
@@ -144,7 +149,6 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     alignItems: "center",
     margin: 24,
-    marginBottom: 0,
     marginTop: 0,
     borderRadius: 8,
     shadowColor: "black",
@@ -162,9 +166,36 @@ const styles = StyleSheet.create({
   produceCard: {
     flex: 1,
     justifyContent: "center",
-    flexDirection: "column",
+    flexDirection: "row",
     backgroundColor: "white",
     alignItems: "center",
-    margin: 24
-  }
+    margin: 24,
+    marginBottom: 12,
+    marginTop: 12,
+    borderRadius: 8,
+    shadowColor: "black",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+  },
+  produceWriting: {
+    flex: 1,
+    justifyContent: "center",
+    flexDirection: "column",
+    padding: 8,
+    marginLeft: 8
+  },
+  produceImage: {
+    width: 100, 
+    height: 100,
+    borderRadius: 50,
+    borderWidth: 2,
+    margin: 4
+  },
+  produceSubTitle: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    textAlign: "center",
+    paddingBottom: 8
+  },
 });

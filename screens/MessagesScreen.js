@@ -79,7 +79,7 @@ const MessagesScreen = ({ navigation }) => {
 
   if (isLoading === true) {
     return (
-      <View style={styles.container}>
+      <View style={styles.area}>
         <Text >
           I am obsessed with perfection. I want to work. I don't want to take
           this for granted.
@@ -103,18 +103,18 @@ const MessagesScreen = ({ navigation }) => {
   }
 
   return (
-    <Container>
+    <Container style= {styles.area}>
       <FlatList
         data={unique}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Card
             onPress={() =>
-              navigation.navigate("UserChat", {
+             { navigation.navigate("UserChat", {
                 userName: item.user.sent_from_username,
                 sent_to_farm_id: item.user.sent_to_farm_id,
-                sent_to_farm_email: item.user.sent_to_farm_email,
-              })
+                sent_to_farm_email: item.user.sent_to_farm_email 
+              })}
             }
           >
             <UserInfo>
@@ -144,5 +144,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     backgroundColor: "#8fcbbc",
+  },
+  area: {
+    padding:40
   },
 });
