@@ -204,7 +204,7 @@ const styles= StyleSheet.create({
         borderColor: "white",
     },
     titleText: {
-        fontSize: 35,
+        fontSize: 25,
         fontWeight: 'bold',
         marginTop:10
     },
@@ -216,7 +216,7 @@ const styles= StyleSheet.create({
         paddingHorizontal: 32,
         borderRadius: 4,
         elevation: 3,
-        backgroundColor: 'white',
+        backgroundColor: '#4d9900',
         marginTop:40,
         borderRadius: 8,
         shadowColor: "black",
@@ -226,10 +226,10 @@ const styles= StyleSheet.create({
         padding: 4,
       },
       text: {
-        fontSize: 20,
+        fontSize: 18,
         lineHeight: 21,
         fontWeight: 'bold',
         letterSpacing: 0.25,
-        color: 'green',
+        color: 'white',
       },
 })

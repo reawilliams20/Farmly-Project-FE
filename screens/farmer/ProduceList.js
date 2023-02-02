@@ -223,7 +223,8 @@ const styles = StyleSheet.create({
 addProduce:{
   backgroundColor: "white",
   padding: 40,
-  marginTop: 20
+  marginTop: 20,
+  borderRadius: 20
 },
 input:{
   borderBottomColor: "grey",
