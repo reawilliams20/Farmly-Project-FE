@@ -29,8 +29,8 @@ const SettingScreen = ({navigation}) =>{
             setIsLoading(false)
         })
     }, [copy])
-
-    const signOutNow = () => {
+    
+    const signOutNow = ({navigation}) => {
         signOut(auth)
           .then(() => {
             isLoggedIn = false

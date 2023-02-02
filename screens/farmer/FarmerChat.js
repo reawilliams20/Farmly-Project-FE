@@ -5,8 +5,7 @@ import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { auth, db } from "../../firebase";
 import { getFarmById } from "../../utils/api";
-// import Icon from '@mdi/react';
-// import { mdiArrowLeft } from '@mdi/js';
+
 import {
   collection,
   addDoc,
@@ -69,7 +68,10 @@ const FarmerChat = ({navigation, route}) =>{
 
     return (
         <>
-        <Pressable onPress={()=>navigation.navigate('MessagesScreenForFarmers')}>
+        <Pressable 
+        onPress={()=>navigation.navigate('MessagesScreenForFarmers')}
+        style= {styles.arrow} 
+        >
         <Text>⬅</Text>
         </Pressable>
         <GiftedChat
@@ -96,5 +98,9 @@ const styles= StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         backgroundColor:'#8fcbbc'
+    },
+    arrow:{
+      paddingTop: 40,
+      paddingLeft: 20,
     }
 })
