@@ -29,17 +29,7 @@ const SettingScreen = ({navigation}) =>{
             setIsLoading(false)
         })
     }, [copy])
-
-    const thisAccount = [...account]
     
-    // const iniPic = thisAccount[0].profile_pic
-    // console.log(iniPic, "PPPPPP")
-    // const [username, setUsername] = useState(thisAccount[0].username)
-    // const [email, setEmail] = useState(thisAccount[0].email)
-    // const [postcode, setPostcode] = useState(thisAccount[0].postcode)
-    // const [pic, setPic] = useState(thisAccount[0].profile_pic)
-    // const [password, setPassword] = useState(thisAccount[0].password)
-
     const signOutNow = ({navigation}) => {
         signOut(auth)
           .then(() => {
@@ -51,55 +41,60 @@ const SettingScreen = ({navigation}) =>{
             alert(error.message);
           });
       };
-
+    const handlePassword = (text) => {
+        updatePassword(auth.currentUser, text)
+        .then(() => {
+            const updateBody = {
+                password: text
+            }
+            updateUserById(account[0].user_id, updateBody)
+            alert('Password Changed!')
+        })
+        .catch((error) => {
+            alert('Something went wrong try again!')
+        });
+    }
     const resetPassword = () => {
+        console.log(auth.currentUser, "ppppp")
         Alert.prompt("Change your password", "Please input your new password here", [
             {
                 text:"Submit",
-                onPress:(text) => setPassword(text)
+                onPress:(text) => handlePassword(text)
             },
             {
                 text:"Cancel",
                 onPress:() => {alert('Canceled')}
             }
-        ], "plain-text", "new password")
-        const user = auth.currentUser;
-        //const newPassword = getASecureRandomPassword();
+        ], "plain-text", "")
+    };
 
-        updatePassword(user, password)
+    const handleEmail = (text) => {
+        updateEmail(auth.currentUser, text)
         .then(() => {
             const updateBody = {
-                password: password
+                email: text
             }
-            updateUserById(id, updateBody)
+            updateUserById(account[0].user_id, updateBody)
+            signOutNow()
+            alert('Email Changed!')
         })
         .catch((error) => {
-        // An error ocurred 
-        });
-    };
+            alert('Something went wrong try again!')
+        })
+    }
 
     const resetEmail = () => {
         Alert.prompt("Reset your email", "Please input the new email here", [
             {
                 text:"Submit",
-                onPress:(text) => setEmail(text)
+                onPress:(text) => handleEmail(text)
             },
             {
                 text:"Cancel",
                 onPress:() => {alert('Canceled')}
             }
-        ], "plain-text", "new Email here")
+        ], "plain-text", "")
 
-        const newEmail = email;
-        updateEmail(auth.currentUser, newEmail)
-        .then(() => {
-            const updateBody = {
-                email: email
-            }
-            updateUserById(id, updateBody)
-          }).catch((error) => {
-            alert('Something went wrong try again!')
-          })
     };
 
     const handleChangePic = (text) => {
@@ -134,6 +129,10 @@ const SettingScreen = ({navigation}) =>{
         ], "plain-text", "")
     };
 
+    const changeDisplay = () => {
+
+    }
+
         return isLoading ? (
             <View style={styles.container}>
                 <Text>Loading...</Text>
@@ -149,14 +148,14 @@ const SettingScreen = ({navigation}) =>{
             title = "Change photo"
             onPress={changePic}/>
             <Text style={styles.titleText}>{account[0].username}</Text>
-            <Pressable><Text>✍🏼</Text></Pressable>
+            <Text>{account[0].postcode}</Text>
+            <Pressable
+            onPress={changeDisplay}><Text>✍🏼</Text></Pressable>
             {/* <TextInput style={styles.input} placeholder={account[0].username} editable={isEditable} onChangeText={username => setUsername(username)}/>  */}
-            {/* <Text>Email:</Text>
-            <TextInput style={styles.input} placeholder={account[0].email} editable={isEditable} onChangeText={email => setEmail(email)}/>  */}
-            <Text>Postcode:</Text>
+            {/* <Text>Postcode:</Text> */}
             {/* <TextInput style={styles.input} placeholder={account[0].postcode} editable={isEditable} onChangeText={postcode => setPostcode(postcode)}/>  */}
-            <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProfile(e)} />
-                    {isEditable ? (<Button title="Save" onPress={updateProfile} />) :null }
+            {/* <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProfile(e)} />
+                    {isEditable ? (<Button title="Save" onPress={updateProfile} />) :null } */}
             <Button 
             title = "Reset my email"
             onPress={resetEmail}/>
