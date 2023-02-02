@@ -94,7 +94,7 @@ const styles= StyleSheet.create({
         marginTop: 40,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#8fcbbc'
+        backgroundColor:'#B6EBA6'
     },
     card:{
         backgroundColor: "white",

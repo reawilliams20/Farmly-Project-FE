@@ -223,7 +223,7 @@ const styles= StyleSheet.create({
         flex:1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#8fcbbc'
+        backgroundColor:'#B6EBA6'
     },
     input:{
         margin: 10,
