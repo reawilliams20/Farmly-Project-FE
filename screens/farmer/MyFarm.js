@@ -218,7 +218,9 @@ const MyFarm = ({navigation}) => {
 export default MyFarm;
 
 const styles= StyleSheet.create({
-  container:{
+
+  container: {
+
     padding: 60,
     flex:1,
     alignItems:'center',
@@ -230,8 +232,10 @@ const styles= StyleSheet.create({
     borderBottomColor: "solid grey",
     borderBottomWidth: 0.5,
     padding: 10,
+
     fontSize:25,
     fontStyle:'italic'
+
   },
   add: {
     backgroundColor: "blue",
