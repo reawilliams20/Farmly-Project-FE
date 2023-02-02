@@ -2,6 +2,8 @@ import React, { useContext, useState, useLayoutEffect, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Image } from "react-native";
 import { Button } from "react-native-elements";
 import { UserContext } from "../navigation/user";
+import { Avatar } from 'react-native-paper';
+
 import {
   collection,
   addDoc,
@@ -118,13 +120,10 @@ const MessagesScreen = ({ navigation }) => {
             }
           >
             <UserInfo>
-              <UserImgWrapper>
-                <UserImg source={item.user.sent_to_farm_pic} />
-              </UserImgWrapper>
+            <Avatar.Image size={60} source={{uri: item.user.sent_to_farm_pic}} />
               <TextSection>
                 <UserInfoText>
                   <UserName>{item.user.sent_to_farm_name}</UserName>
-                  {/* <PostTime>{item.messageTime}</PostTime> */}
                 </UserInfoText>
                 <MessageText>{item.text}</MessageText>
               </TextSection>
@@ -146,6 +145,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#8fcbbc",
   },
   area: {
-    padding:40
+    padding: 80,
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#8fcbbc",
   },
 });
