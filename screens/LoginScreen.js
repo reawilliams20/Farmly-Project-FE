@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, Pressable } from "react-native";
 import { Button } from "react-native-elements";
 import { useContext } from "react";
 import { UserContext } from "../navigation/user";
@@ -39,7 +39,10 @@ const LoginScreen = ({ navigation }) => {
   return (
     <>
       <View style={styles.container}>
-        <Text styles={styles.header}>Welcome to Farmly Marketplace!</Text>
+        <Image
+        style={styles.logo}
+        source={require('../gif/farmlyLogo.png')}/>
+        <Text style={styles.header}>Welcome to Farmly Marketplace!</Text>
         <Input
           placeholder="Enter your email"
           leftIcon={{ type: "material", name: "email" }}
@@ -55,13 +58,13 @@ const LoginScreen = ({ navigation }) => {
           secureTextEntry
           required
         />
-      </View>
-      <View>
-        <Button
-          title="Login"
+        <Pressable
           onPress={()=> [signin(email, password), handleLogin(email)]}
           style={styles.buttonText}
-        />
+        >
+        <Text style={styles.text}>Log in</Text>
+        </Pressable>
+
         <TouchableOpacity
           style={styles.button}
           onPress={() => navigation.navigate("SignupScreen")}
@@ -78,25 +81,25 @@ const LoginScreen = ({ navigation }) => {
 export default LoginScreen;
 
 const styles = StyleSheet.create({
-  header: {
-    fontSize: 60,
-    fontWeight: "bold",
-    marginTop: -40,
-    marginBottom: 100,
-    color: "#F7F6F8",
-    fontFamily: "Georgia",
-  },
   container: {
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
     padding: 10,
-    marginTop: 100
+    marginTop: 40
   },
-
+  header: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginTop:50,
+    marginBottom: 20,
+    color: "#508D3D",
+    fontFamily: "Georgia",
+    fontStyle:'italic'
+  },
   button: {
     width: "100%",
-    padding: 15,
+    padding: 20,
     alignItems: "center",
     borderRadius: 10,
   },
@@ -104,18 +107,32 @@ const styles = StyleSheet.create({
     marginTop: 10,
     width: "100%",
     // height: windowHeight / 15,
-    backgroundColor: "#2e64e5",
     padding: 10,
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 3,
   },
   buttonText: {
-    fontSize: 18,
     fontWeight: "bold",
-    color: "#ffffff",
+    backgroundColor: '#4d9900',
+    alignItems:'center',
+    padding:17,
+    paddingLeft:30,
+    paddingRight:30,
+    borderRadius: 20
   },
   underline: {
-    textDecorationLine: "underline",
+    textDecorationLine: "underline"
   },
+  logo:{
+    width:"80%",
+    height:"40%",
+    borderRadius: 400/ 2,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  text:{
+    fontSize:20,
+    color:'white'
+  }
 });
