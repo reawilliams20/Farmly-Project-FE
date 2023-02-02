@@ -59,24 +59,24 @@ const SingleProduce = ({route, navigation}) =>{
             renderItem= {({item})=>{
                 return (
                     <View style={styles.card}>
-                    <Text>Name:</Text>
+                    <Text style={styles.text}>Name:</Text>
                     <TextInput style={styles.input} placeholder={item.name} editable={isEditable} onChangeText={name => setName(name)}/> 
-                    <Text>Stock:</Text>
+                    <Text style={styles.text}>Stock:</Text>
                     <TextInput style={styles.input} placeholder={`${item.stock}`} editable={isEditable} onChangeText={stock => setStock(stock)}/> 
-                    <Text>Price:</Text>
+                    <Text style={styles.text}>Price:</Text>
                     <TextInput style={styles.input} placeholder={`${item.price}`} editable={isEditable} onChangeText={price => setPrice(price)}/> 
-                    <Text>Unit:</Text>
+                    <Text style={styles.text}>Unit:</Text>
                     <TextInput style={styles.input} placeholder={item.unit} editable={isEditable} onChangeText={unit => setUnit(unit)}/> 
-                    <Text>Description:</Text>
+                    <Text style={styles.text}>Description:</Text>
                     <TextInput style={styles.input} placeholder={item.description} editable={isEditable} onChangeText={description => setDescription(description)}/> 
-                    <Text>Catgeory:</Text>
+                    <Text style={styles.text}>Catgeory:</Text>
                     <TextInput style={styles.input} placeholder={item.category} editable={isEditable} onChangeText={category => setCategory(category)}/> 
-                    <Text>Image:</Text>
+                    <Text style={styles.text}>Image:</Text>
                     <Image style={styles.pic} source={{uri:`${item.produce_pic}`}}/>
                     <TextInput style={styles.input} placeholder={item.produce_pic} editable={isEditable} onChangeText={pic => setPic(pic)}/> 
-                    <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProduce(e)} />
+                    <Button style={styles.editButtons} title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProduce(e)} />
                     {isEditable ? (<Button title="Save" onPress={updateProduce} />) :null }
-                    <Button title="Back" onPress={() => navigation.navigate("ProduceList")} />
+                    <Button style={styles.editButtons} title="Back" onPress={() => navigation.navigate("ProduceList")} />
                     </View>
                 )
             }}
@@ -94,7 +94,7 @@ const styles= StyleSheet.create({
         marginTop: 40,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#8fcbbc'
+        backgroundColor:'white'
     },
     card:{
         backgroundColor: "white",
@@ -108,8 +108,18 @@ const styles= StyleSheet.create({
         padding: 10,
     },
     pic:{
+        marginTop: 10,
         alignSelf: "center",
-        width:100,
-        height: 60
+        width:200,
+        height: 120
+    },
+    text: {
+        paddingLeft: 10
+    },
+    editButtons: {
+        backgroundColor: "#4d9900",
+        padding: 10,
+        borderRadius: 5,
+        paddingBottom: 40
     }
 })

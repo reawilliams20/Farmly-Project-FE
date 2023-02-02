@@ -1,8 +1,6 @@
 import React, {useContext, useEffect, useState} from "react";
-import { View, StyleSheet, Text, TextInput,Image, Pressable, Alert} from "react-native";
-import { Button } from "react-native-elements";
-import { signOut, updateEmail, updatePassword,updateProfile, getAuth} from "firebase/auth";
-import { auth, db } from "../firebase";
+import { View, StyleSheet, Text, Image, Alert, Pressable} from "react-native";
+import { signOut, updateEmail, updatePassword, updateProfile, getAuth} from "firebase/auth";
 import { UserContext } from "../navigation/user";
 import { getUsers, updateUserById } from "../utils/api";
 
@@ -10,11 +8,9 @@ const SettingScreen = ({navigation}) =>{
     let { user, isLoggedIn, type }= useContext(UserContext)
     const [account, setAccount] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-    let myAccount = []
-    const [isEditable, setIsEditable] = useState(false);
-    const auth = getAuth();
     const [copy, setCopy] = useState({})
-
+    let myAccount = []
+    const auth = getAuth();
     useEffect(() => {
         getUsers()
         .then((response) => {
@@ -38,7 +34,7 @@ const SettingScreen = ({navigation}) =>{
             navigation.navigate("LoginScreen");
           })
           .catch((error) => {
-            alert(error.message);
+            //alert(error.message);
           });
       };
     const handlePassword = (text) => {
@@ -129,8 +125,27 @@ const SettingScreen = ({navigation}) =>{
         ], "plain-text", "")
     };
 
-    const changeDisplay = () => {
+    const handleUsername = (text) => {
+        const accountCopy = {...account[0]}
+        accountCopy.username = text
+        setCopy(accountCopy)
+        const updateBody = {
+            username: text
+        }
+        updateUserById(account[0].user_id, updateBody)
+    }
 
+    const resetUsername= () => {
+        Alert.prompt("Change your username", "What's your next username", [
+            {
+                text:"Submit",
+                onPress:(text) => {handleUsername(text)}
+            },
+            {
+                text:"Cancel",
+                onPress:() => {console.log('Canceled')}
+            }
+        ], "plain-text", "")
     }
 
         return isLoading ? (
@@ -144,28 +159,22 @@ const SettingScreen = ({navigation}) =>{
             <Image 
             style={styles.Logo}
             source={{uri:`${copy.profile_pic}`}}/>
-            <Button 
-            title = "Change photo"
-            onPress={changePic}/>
-            <Text style={styles.titleText}>{account[0].username}</Text>
-            <Text>{account[0].postcode}</Text>
-            <Pressable
-            onPress={changeDisplay}><Text>✍🏼</Text></Pressable>
-            {/* <TextInput style={styles.input} placeholder={account[0].username} editable={isEditable} onChangeText={username => setUsername(username)}/>  */}
-            {/* <Text>Postcode:</Text> */}
-            {/* <TextInput style={styles.input} placeholder={account[0].postcode} editable={isEditable} onChangeText={postcode => setPostcode(postcode)}/>  */}
-            {/* <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProfile(e)} />
-                    {isEditable ? (<Button title="Save" onPress={updateProfile} />) :null } */}
-            <Button 
-            title = "Reset my email"
-            onPress={resetEmail}/>
-            <Button 
-            title = "Reset my password"
-            onPress={resetPassword}/>
-            <Button
-            title = "Sign Out"
-            onPress={signOutNow}
-            />
+            <Text style={styles.titleText}>{copy.username}</Text>
+            <Pressable style={styles.button} onPress={changePic}>
+            <Text style={styles.text}>Change photo</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={resetUsername}>
+            <Text style={styles.text}>Reset username</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={resetEmail}>
+            <Text style={styles.text}>Reset email</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={resetPassword}>
+            <Text style={styles.text}>Reset password</Text>
+            </Pressable>
+            <Pressable style={styles.button} onPress={signOutNow}>
+            <Text style={styles.text}>Sign Out</Text>
+            </Pressable>
             </View>
           )
     
@@ -178,7 +187,7 @@ const styles= StyleSheet.create({
         flex:1,
         alignItems:'center',
         justifyContent:'center',
-        backgroundColor:'#8fcbbc'
+        backgroundColor:'#B6EBA6'
     },
     input:{
         margin: 10,
@@ -187,15 +196,40 @@ const styles= StyleSheet.create({
         padding: 10,
     },
     Logo: {
-        width: 150,
-        height: 150,
+        width: 200,
+        height: 200,
         borderRadius: 100/2,
         overflow: "hidden",
         borderWidth: 3,
         borderColor: "white",
     },
     titleText: {
-        fontSize: 20,
+        fontSize: 35,
         fontWeight: 'bold',
-    }
+        marginTop:10
+    },
+    button: {
+        width: 250,
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 12,
+        paddingHorizontal: 32,
+        borderRadius: 4,
+        elevation: 3,
+        backgroundColor: 'white',
+        marginTop:40,
+        borderRadius: 8,
+        shadowColor: "black",
+        shadowOffset: {width: 2, height: 2},
+        shadowOpacity: 0.5,
+        shadowRadius: 5,
+        padding: 4,
+      },
+      text: {
+        fontSize: 20,
+        lineHeight: 21,
+        fontWeight: 'bold',
+        letterSpacing: 0.25,
+        color: 'green',
+      },
 })

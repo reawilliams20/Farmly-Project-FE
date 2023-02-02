@@ -104,44 +104,50 @@ const ProduceList = ({ navigation }) => {
       </Pressable>
 
       {shouldShow ?
-        ( <View>
+        ( <View style={styles.addProduce}>
           <Text>Name:</Text>
           <TextInput 
+          style={styles.input}
           placeholder="e.g peas" 
           onChangeText={name => setName(name)}/>
           
           <Text>Stock:</Text>
           <TextInput
+          style={styles.input}
           placeholder="e.g 10"
           onChangeText={stock => setStock(stock)}                                     
           />
 
           <Text>Price(£):</Text>
           <TextInput
+          style={styles.input}
           placeholder="e.g 2.50" 
           onChangeText={price => setPrice(price)}
           />
 
           <Text>Unit:</Text>
           <TextInput
+          style={styles.input}
           placeholder="e.g 300g" 
           onChangeText={unit => setUnit(unit)}
           />  
 
           <Text>Description:</Text>
           <TextInput
+          style={styles.input}
           placeholder="description"
           onChangeText={description => setDescription(description)}
           />
 
           <Text>Image:</Text>
           <TextInput
+          style={styles.input}
           placeholder="https://www.image.com"
           onChangeText={pic => setPic(pic)}
           />
 
           <Text>Category:</Text>
-          <RadioForm
+          <RadioForm style={styles.radio}
           radio_props={categories}
           initial={0}
           onPress={(value) => {
@@ -150,7 +156,7 @@ const ProduceList = ({ navigation }) => {
           />
 
           <Pressable style={styles.add} onPress={()=> addProduce()}>
-          <Text>Add Produce</Text>
+          <Text style={styles.content}>Add Produce</Text>
           </Pressable>
 
         </View>)
@@ -187,7 +193,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#8fcbbc",
+    backgroundColor:'#B6EBA6'
   },
   button:{
     backgroundColor: "none",
@@ -205,7 +211,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   add:{
-    backgroundColor: "blue",
+    backgroundColor: "#4d9900",
     padding: 10,
     borderRadius: 5,
   },
@@ -213,5 +219,24 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     width:100,
     height: 60
+},
+addProduce:{
+  backgroundColor: "white",
+  padding: 40,
+  marginTop: 20
+},
+input:{
+  borderBottomColor: "grey",
+  borderBottomWidth: 1,
+  marginBottom: 10
+},
+radio: {
+  paddingBottom: 20
+},
+content: {
+  color: "white",
+  fontWeight: "bold",
+  fontSize: 16,
+  textAlign: "center"
 }
 });
