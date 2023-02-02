@@ -13,7 +13,7 @@ const SettingScreen = ({navigation}) =>{
     let myAccount = []
     const [isEditable, setIsEditable] = useState(false);
     const auth = getAuth();
-    const [id, setId] = useState()
+    const [copy, setCopy] = useState({})
 
     useEffect(() => {
         getUsers()
@@ -25,19 +25,20 @@ const SettingScreen = ({navigation}) =>{
         })
         .then(() => {
             setAccount(myAccount)
+            setCopy(myAccount[0])
             setIsLoading(false)
-            if(account.length !== 0){
-            setId(account[0].user_id)
-            }
         })
-    }, [])
+    }, [copy])
 
-    const thisAccount = {...account}
-    const [username, setUsername] = useState(thisAccount.username)
-    const [email, setEmail] = useState(thisAccount.email)
-    const [postcode, setPostcode] = useState(thisAccount.postcode)
-    const [pic, setPic] = useState(thisAccount.profile_pic)
-    const [password, setPassword] = useState(thisAccount.password)
+    const thisAccount = [...account]
+    
+    // const iniPic = thisAccount[0].profile_pic
+    // console.log(iniPic, "PPPPPP")
+    // const [username, setUsername] = useState(thisAccount[0].username)
+    // const [email, setEmail] = useState(thisAccount[0].email)
+    // const [postcode, setPostcode] = useState(thisAccount[0].postcode)
+    // const [pic, setPic] = useState(thisAccount[0].profile_pic)
+    // const [password, setPassword] = useState(thisAccount[0].password)
 
     const signOutNow = ({navigation}) => {
         signOut(auth)
@@ -101,34 +102,36 @@ const SettingScreen = ({navigation}) =>{
           })
     };
 
+    const handleChangePic = (text) => {
+        const accountCopy = {...account[0]}
+        accountCopy.profile_pic = text
+        setCopy(accountCopy)
+        updateProfile(auth.currentUser, {
+            displayName: auth.currentUser.displayName, 
+            photoURL: text
+          })
+        .then(() => {
+            const updateBody = {
+                profile_pic: text
+            }
+            updateUserById(account[0].user_id, updateBody)
+        })
+        .catch((error) => {
+          alert('Something went wrong try again!')
+        });
+    }
+
     const changePic = () => {
         Alert.prompt("Upload your photo", "Please upload the pic here", [
             {
                 text:"Submit",
-                onPress:(text) => setPic(text)
+                onPress:(text) => {handleChangePic(text)}
             },
             {
                 text:"Cancel",
                 onPress:() => {console.log('Canceled')}
             }
-        ], "plain-text", "put the url here")
-
-        const thisName = auth.currentUser.displayName;
-        const newPic = pic;
-        updateProfile(auth.currentUser, {
-            displayName: thisName, 
-            photoURL: newPic
-          })
-        .then(() => {
-            const updateBody = {
-                profile_pic: pic
-            }
-            updateUserById(id, updateBody)
-        })
-        .catch((error) => {
-          alert('Something went wrong try again!')
-        });
-          
+        ], "plain-text", "")
     };
 
         return isLoading ? (
@@ -141,7 +144,7 @@ const SettingScreen = ({navigation}) =>{
             <View style={styles.container}>
             <Image 
             style={styles.Logo}
-            source={{uri:`${account[0].profile_pic}`}}/>
+            source={{uri:`${copy.profile_pic}`}}/>
             <Button 
             title = "Change photo"
             onPress={changePic}/>
@@ -151,7 +154,7 @@ const SettingScreen = ({navigation}) =>{
             {/* <Text>Email:</Text>
             <TextInput style={styles.input} placeholder={account[0].email} editable={isEditable} onChangeText={email => setEmail(email)}/>  */}
             <Text>Postcode:</Text>
-            <TextInput style={styles.input} placeholder={account[0].postcode} editable={isEditable} onChangeText={postcode => setPostcode(postcode)}/> 
+            {/* <TextInput style={styles.input} placeholder={account[0].postcode} editable={isEditable} onChangeText={postcode => setPostcode(postcode)}/>  */}
             <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editProfile(e)} />
                     {isEditable ? (<Button title="Save" onPress={updateProfile} />) :null }
             <Button 

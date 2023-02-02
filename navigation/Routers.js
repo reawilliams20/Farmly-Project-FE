@@ -10,7 +10,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 const Stack = createNativeStackNavigator();
 const Routes = () => {
   const { user, setUser , type, isFirstLaunch, isLoggedIn} = useContext(UserContext);
-  console.log(isLoggedIn)
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
         setUser(user)
