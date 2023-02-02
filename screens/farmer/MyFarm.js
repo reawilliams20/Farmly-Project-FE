@@ -9,7 +9,6 @@ const MyFarm = ({navigation}) => {
     const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-
     const [shouldShow, setShouldShow] = useState(false);
     const [newFarmName, setNewFarmName] = useState("");
     const [profile_pic, setProfilePic] = useState("");
@@ -22,9 +21,7 @@ const MyFarm = ({navigation}) => {
     const [isEditable, setIsEditable] = useState(false);
     const [name, setName] = useState(farm.name)
     const [newDescription, setNewDescription] = useState(farm.description)
-
-
-
+    const [farmAdded, setFarmAdded] = useState(false)
 
   if (isFirstLaunch == true) {
     useEffect(() => {
@@ -47,14 +44,13 @@ const MyFarm = ({navigation}) => {
         distance_from_location: 0,
       };
 
-    setFarm((farm)=>{
-        const newFarmList = [...farm]
-        newFarmList.push(newFarm)
-        return newFarmList
-    })
-  
+    setFarm(newFarm)
+    console.log(farm,"5777777")
 
     postFarm(newFarm)
+    .then(()=>{
+        setFarmAdded(true)
+    })
     .catch((err) => {
       alert("sorry something went wrong, please try again later.");
     //   setFarm((farm)=>{
@@ -63,13 +59,9 @@ const MyFarm = ({navigation}) => {
     //     return newFarmList
     //   })
     });
-    console.log(farm,"64")
-
-    
-    
 
     };
-    return (
+    return farmAdded===false ?(
       <View style={styles.container}>
         <Pressable
           style={styles.add}
@@ -149,6 +141,20 @@ const MyFarm = ({navigation}) => {
         <Text>{farm[0].description}</Text>
       </View>
     ); */}
+      </View>
+    ): (
+        <View style={styles.container}>
+        <Image
+          source={{ uri: `${farm[0].profile_pic}` }}
+          style={{ width: 400, height: 200 }}
+        />
+        <Text>{farm[0].name}</Text>
+        <Text>{farm[0].address.street}</Text>
+        <Text>{farm[0].address.town}</Text>
+        <Text>{farm[0].address.county}</Text>
+        <Text>{farm[0].address.postcode}</Text>
+        <Text>{farm[0].address.country}</Text>
+        <Text>{farm[0].description}</Text>
       </View>
     );
   } else {
