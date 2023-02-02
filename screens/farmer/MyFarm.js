@@ -69,39 +69,45 @@ const MyFarm = ({navigation}) => {
           <Text style={styles.content}>+</Text>
         </Pressable>
         {shouldShow ? (
-          <View>
+          <View style={styles.addFarm}>
             <Text>Farm Name:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter farm name"
               onChangeText={(newFarmName) => setNewFarmName(newFarmName)}
             />
 
             <Text>Street:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter street"
               onChangeText={(street) => setStreet(street)}
             />
 
             <Text>Town:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter town"
               onChangeText={(town) => setTown(town)}
             />
 
             <Text>County:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter county"
               onChangeText={(county) => setCounty(county)}
             />
 
             <Text>Postcode:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter postcode"
               onChangeText={(postcode) => setPostcode(postcode)}
             />
 
             <Text>Country:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Enter country"
               onChangeText={(country) => setCountry(country)}
             />
@@ -109,19 +115,21 @@ const MyFarm = ({navigation}) => {
 
             <Text>Description:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Provide a description of your farm"
               onChangeText={(description) => setDescription(description)}
             />
 
             <Text>Farm image:</Text>
             <TextInput
+              style={styles.textinput}
               placeholder="Upload an image"
               onChangeText={(profile_pic) => setProfilePic(profile_pic)}
             />
 
 
             <Pressable style={styles.add} onPress={() => addFarm()}>
-              <Text>Add Farm</Text>
+              <Text style={styles.content}>Add Farm</Text>
             </Pressable>
           </View>
         ) : null}
@@ -132,13 +140,13 @@ const MyFarm = ({navigation}) => {
           source={{ uri: `${farm[0].profile_pic}` }}
           style={{ width: 400, height: 200 }}
         />
-        <Text>{farm[0].name}</Text>
-        <Text>{farm[0].address.street}</Text>
-        <Text>{farm[0].address.town}</Text>
-        <Text>{farm[0].address.county}</Text>
-        <Text>{farm[0].address.postcode}</Text>
-        <Text>{farm[0].address.country}</Text>
-        <Text>{farm[0].description}</Text>
+        <Text style={styles.text}>{farm[0].name}</Text>
+        <Text style={styles.text}>{farm[0].address.street}</Text>
+        <Text style={styles.text}>{farm[0].address.town}</Text>
+        <Text style={styles.text}>{farm[0].address.county}</Text>
+        <Text style={styles.text}>{farm[0].address.postcode}</Text>
+        <Text style={styles.text}>{farm[0].address.country}</Text>
+        <Text style={styles.text}>{farm[0].description}</Text>
       </View>
     )
     } else {
@@ -220,7 +228,6 @@ export default MyFarm;
 const styles= StyleSheet.create({
 
   container: {
-
     padding: 60,
     flex:1,
     alignItems:'center',
@@ -237,15 +244,33 @@ const styles= StyleSheet.create({
     fontStyle:'italic'
 
   },
-  add: {
-    backgroundColor: "blue",
+  add:{
+    backgroundColor: "#4d9900",
     padding: 10,
     borderRadius: 5,
+    marginTop:20
   },
   text:{
     borderBottomColor: "solid grey",
     borderBottomWidth: 0.5,
     fontSize:15,
+  },
+  textinput:{
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    marginBottom: 20
+  },
+  content: {
+    color: "white",
+    fontWeight: "bold",
+    fontSize: 16,
+    textAlign: "center"
+  },
+  addFarm:{
+    backgroundColor: "white",
+    padding: 40,
+    marginTop:20,
+    borderRadius: 20
   }
 })
 
