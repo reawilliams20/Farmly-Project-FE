@@ -52,7 +52,7 @@ const FarmList = ({ navigation }) => {
 
   if (loading) {
     return (
-      <View>
+      <View style={styles.listCard}>
         <Text>Calculating your closest farms...</Text>
       </View>
     )
@@ -61,32 +61,42 @@ const FarmList = ({ navigation }) => {
   if (!permission) {
     return (
       <View style={styles.container}>
-      <FlatList
-        data={farms}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>
-                <Image
-                style={styles.cardImage}
-                source={{uri: item.profile_pic}}
-                />
-              <Text 
-              style={styles.baseText} >
-                <Text
-                style={styles.titleText}>
-                  {item.name}
+        <View style={styles.listCard}>
+          <Text style={styles.topCard}>
+            Check out some nearby farms!
+          </Text>
+        </View>
+        <FlatList
+          data={farms}
+          renderItem={({ item }) => {
+            return (
+              <TouchableOpacity style={styles.card} onPress={() => navigation.navigate("SingleFarm", {farm_id: item.farm_id})}>
+                  <Image
+                  style={styles.cardImage}
+                  source={{uri: item.profile_pic}}
+                  />
+                <Text 
+                style={styles.baseText} >
+                  <Text
+                  style={styles.titleText}>
+                    {item.name}
+                  </Text>
                 </Text>
-              </Text>
-            </TouchableOpacity>
-          );
-        }}
-      />
+              </TouchableOpacity>
+            );
+          }}
+        />
     </View>
     )
   }
 
   return (
       <View style={styles.container}>
+        <View style={styles.listCard}>
+          <Text style={styles.topCard}>
+            Check out some nearby farms!
+          </Text>
+        </View>
         <FlatList
           data={farms}
           renderItem={({ item }) => {
@@ -136,7 +146,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5
   },
   cardImage: {
-    width: 327,
+    width: 380,
     height: 150,
     overflow: "hidden",
     borderTopRightRadius: 8,
@@ -152,4 +162,22 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     padding: 8
   },
+  listCard: {
+      margin: 24,
+      marginTop: 64,
+      backgroundColor: "white",
+      alignItems: "center",
+      borderRadius: 8,
+      shadowColor: "black",
+      shadowOffset: {width: 2, height: 2},
+      shadowOpacity: 0.5,
+      shadowRadius: 5,
+      padding: 4
+  },
+  topCard: {
+    padding: 4,
+    fontSize: 24,
+    fontWeight: "bold",
+    margin: 0
+  }
 });
