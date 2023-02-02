@@ -1,10 +1,13 @@
 import React, { useCallback, useContext, useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { auth, db } from "../../firebase";
 import { getFarmById } from "../../utils/api";
+import Icon from '@mdi/react';
+import { mdiArrowLeft } from '@mdi/js';
+
 import {
   collection,
   addDoc,
@@ -49,7 +52,6 @@ const UserChat = ({ navigation, route }) => {
           user: doc.data().user,
         }))
       ),
-      // setIsLoading(false)
     );
     return () => {
       unsubscribe();
@@ -106,6 +108,11 @@ const UserChat = ({ navigation, route }) => {
 
   return (
     <>
+    <Pressable
+    style= {styles.arrow} 
+    onPress={()=>navigation.navigate('MessagesScreen')}>
+      <Text>⬅</Text>
+    </Pressable>
       <GiftedChat
         messages={validMessages}
         onSend={(validMessages) => onSend(validMessages)}
@@ -134,4 +141,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#8fcbbc",
   },
+  arrow:{
+    paddingTop: 40,
+    paddingLeft: 20,
+  }
 });
