@@ -13,7 +13,6 @@ export function distanceCalculator(currentLat, currentLon, farmPostcode) {
     let distance = 12742 * Math.asin(Math.sqrt(0.5 - cos((lat2 - lat1) * pi)/2 + cos(lat1 * pi) * cos(lat2 * pi) * (1 - cos((lon2 - lon1) * pi))/2))
     let roundedDistance = (Math.round(distance * 10) / 10).toFixed(1)
     //Math.round(distance*100)/100
-    console.log(roundedDistance)
     return roundedDistance
   })
   

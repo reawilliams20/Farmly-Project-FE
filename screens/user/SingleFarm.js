@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Image, Button, ScrollView } from "react-native";
+import { View, Text, StyleSheet, Image, Button, ScrollView, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import { getFarmById, getProduce } from "../../utils/api";
 import { FlatList } from "react-native";
@@ -24,15 +24,13 @@ const SingleFarm = ({ route, navigation }) => {
   if (farm.length !== 0) {
     return (
       <View style={styles.container}>
+        {/* Back button at the top of the screen */}
+        <TouchableOpacity style={styles.backButton} onPress={() => {navigation.navigate("FarmList");}}>
+            <Text style={styles.baseText}>
+              Back
+            </Text>
+          </TouchableOpacity>
         <ScrollView>
-          {/* Back button at the top of the screen */}
-          <View style={styles.backButton}>
-            <Button
-              title="Back"
-              onPress={() => {navigation.navigate("FarmList");}}>
-            </Button>
-          </View>
-
           {/* Farm info card */}
           <View style= {styles.farmInfo}>
             <Image source={{ uri: `${farm.profile_pic}` }} style={styles.cardImage}/>
@@ -119,6 +117,15 @@ const styles = StyleSheet.create({
   },
   backButton: {
     margin: 24,
+    marginTop: 64,
+    backgroundColor: "white",
+    alignItems: "center",
+    borderRadius: 8,
+    shadowColor: "black",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    padding: 4,
   },
   baseText: {
     fontSize: 16,
@@ -157,7 +164,7 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
   },
   cardImage: {
-    width: 327,
+    width: 380,
     height: 150,
     overflow: "hidden",
     borderTopRightRadius: 8,
