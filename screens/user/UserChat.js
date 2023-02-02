@@ -111,14 +111,15 @@ const UserChat = ({ navigation, route }) => {
     <Pressable
     style= {styles.arrow} 
     onPress={()=>navigation.navigate('MessagesScreen')}>
-      <Text>⬅</Text>
+    <Text style= {styles.arrowText}>⬅</Text>
     </Pressable>
       <GiftedChat
+        scrollToBottom
         messages={validMessages}
         onSend={(validMessages) => onSend(validMessages)}
         showAvatarForEveryMessage={true}
+        alwaysShowSend
         user={{
-          // _id: auth?.currentUser?.email,
           sent_to_farm_id: sent_to_farm_id || farm_id,
           sent_to_farm_name: farms.name,
           sent_to_farm_email: farms.username,
@@ -142,7 +143,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#8fcbbc",
   },
   arrow:{
-    paddingTop: 40,
+    paddingTop: 70,
     paddingLeft: 20,
-  }
+  },
+  arrowText:{
+    fontSize: 30
+  },
 });
