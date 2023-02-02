@@ -9,6 +9,7 @@ const MyFarm = ({navigation}) => {
     const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
+    const [farmAdded, setFarmAdded] = useState(false)
 
     const [shouldShow, setShouldShow] = useState(false);
     const [newFarmName, setNewFarmName] = useState("");
@@ -22,8 +23,6 @@ const MyFarm = ({navigation}) => {
     const [isEditable, setIsEditable] = useState(false);
     const [name, setName] = useState(farm.name)
     const [newDescription, setNewDescription] = useState(farm.description)
-
-
 
 
   if (isFirstLaunch == true) {
@@ -47,29 +46,21 @@ const MyFarm = ({navigation}) => {
         distance_from_location: 0,
       };
 
-    setFarm((farm)=>{
-        const newFarmList = [...farm]
-        newFarmList.push(newFarm)
-        return newFarmList
+    setFarm(newFarm)
+    postFarm(newFarm).then(() => {
+        setFarmAdded(true)
     })
-  
-
-    postFarm(newFarm)
     .catch((err) => {
       alert("sorry something went wrong, please try again later.");
-    //   setFarm((farm)=>{
-    //     const newFarmList = [...farm]
-    //     newFarmList.pop()
-    //     return newFarmList
-    //   })
+      setFarm((newFarm) => {
+        const currFarm = [...newFarm]
+        currFarm.pop()
+        return currFarm
+      })
     });
-    console.log(farm,"64")
-
-    
-    
-
     };
-    return (
+
+    return farmAdded===false ? (
       <View style={styles.container}>
         <Pressable
           style={styles.add}
@@ -134,7 +125,8 @@ const MyFarm = ({navigation}) => {
             </Pressable>
           </View>
         ) : null}
-        {/* (
+      </View>
+    ) :(
         <View style={styles.container}>
         <Image
           source={{ uri: `${farm[0].profile_pic}` }}
@@ -148,9 +140,7 @@ const MyFarm = ({navigation}) => {
         <Text>{farm[0].address.country}</Text>
         <Text>{farm[0].description}</Text>
       </View>
-    ); */}
-      </View>
-    );
+    )
   } else {
     let myFarm = [];
     useEffect(() => {
