@@ -218,20 +218,20 @@ const MyFarm = ({navigation}) => {
 export default MyFarm;
 
 const styles= StyleSheet.create({
-    container:{
-        padding: 60,
-        flex:1,
-        alignItems:'center',
-        justifyContent:'center',
-        backgroundColor:'#8fcbbc'
-    },
-    input:{
-        margin: 10,
-        borderBottomColor: "solid grey",
-        borderBottomWidth: 0.5,
-        padding: 10,
-    },
-    add: {
+  container: {
+    padding: 60,
+    flex:1,
+    alignItems:'center',
+    justifyContent:'center',
+    backgroundColor:'#8fcbbc'
+  },
+  input:{
+    margin: 10,
+    borderBottomColor: "solid grey",
+    borderBottomWidth: 0.5,
+    padding: 10,
+  },
+  add: {
     backgroundColor: "blue",
     padding: 10,
     borderRadius: 5,

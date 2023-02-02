@@ -77,7 +77,7 @@ const SingleFarm = ({ route, navigation }) => {
           {/* List of Produce */}
           {produceInStock.map((item) => {
             return (
-              <View style={styles.produceCard}>
+              <View style={styles.produceCard} key={item.name}>
                 <View style={styles.produceWriting}>
                   <Text style={styles.produceSubTitle}>
                     {item.name}:

@@ -7,6 +7,7 @@ import { auth } from "../firebase";
 import { UserContext } from "../navigation/user";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { postUser } from "../utils/api";
+import { color } from "react-native-elements/dist/helpers";
 
 const SignUpScreen = ({ navigation }) => {
   const [passwordVisibility, setPasswordVisibility] = useState(true);
@@ -96,24 +97,23 @@ const SignUpScreen = ({ navigation }) => {
           enablesReturnKeyAutomatically
           required
         />
-        <View  style={styles.inputContainer}>
-        <Input
-        style={styles.inputField}                 
-        placeholder="Enter password "
-        label="Password"
-        value={password}
-        autoCapitalize="none"
-        autoCorrect={false}
-        onChangeText={(text) => setPassword(text)}
-        secureTextEntry={passwordVisibility}
-        enablesReturnKeyAutomatically
-        required
-        />
-        <Pressable onPress={handlePasswordVisibility}
-        >
-        <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
-        </Pressable>
-        </ View>
+          <Input
+          style={styles.inputContainer}                 
+          placeholder="Enter password "
+          label="Password"
+          value={password}
+          autoCapitalize="none"
+          autoCorrect={false}
+          onChangeText={(text) => setPassword(text)}
+          secureTextEntry={passwordVisibility}
+          enablesReturnKeyAutomatically
+          required
+          />
+          <Pressable onPress={handlePasswordVisibility} style={styles.icon}>
+            <MaterialCommunityIcons name={rightIcon} size={22} color="#232323" />
+          </Pressable>
+
+        
         <Input
           style={styles.inputContainer}   
           placeholder="Confirm password "
@@ -145,26 +145,32 @@ const SignUpScreen = ({ navigation }) => {
           enablesReturnKeyAutomatically
           required
         />
-      </View >
-      <View style={styles.picker}>
-        <Text>Select a type</Text>
-        <Picker style={styles.picker}
-          placeholder={{ label: "Select a type", value: null }}
-          selectedValue={type}
-          onValueChange={(value) => setType(value)}
-          required
-        >
+
+        <View>
+          <Text style={styles.typeText}>Select a type</Text>
+          <Picker style={styles.picker}
+            placeholder={{ label: "Select a type", value: null }}
+            selectedValue={type}
+            onValueChange={(value) => setType(value)}
+            required
+          >
           <Picker.Item label="I am a customer" value="customer" />
           <Picker.Item label="I am a farmer" value="farmer" />
-        </Picker>
-      </View>
-      <View>
-        <Button
-          title="Register"
-          onPress={() => handleSignUp(currPostcode, currSelectType)}
-        />
-      </View>
-      </ScrollView>
+          </Picker>
+          </View>
+        
+
+        <View style={styles.button}>
+          <Button
+            title="Register"
+            onPress={() => handleSignUp(currPostcode, currSelectType)}
+          />
+        </View>
+      
+
+      </View >
+
+    </ScrollView>
   );
 };
 
@@ -173,30 +179,35 @@ export default SignUpScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // backgroundColor: '#F5EEDC',
+    backgroundColor: 'white',
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 12
+    padding: 32,
   },
   picker: {
-    flex: 1,
-    justifyContent: 'bottom'
+    height: 80,
+    width: 300,
+    marginTop: -48
   },
-
   inputContainer: {
-    backgroundColor: 'white',
-    width: '90%',
-    borderRadius: 8,
-    flexDirection: 'row',
-    alignItems: 'center',
-    // borderWidth: 4,
-    // borderColor: '#d7d7d7'
+    margin: 10,
+    padding: 10,
+  },
+  icon: {
+    marginTop: -65,
+    marginLeft: 330,
+    marginBottom: 45
   },
   inputField: {
-    padding: 14,
     fontSize: 22,
     width: '80%'
+  },
+  button: {
+    marginTop: 100,
+    marginBottom: 20
+  },
+  typeText: {
+    marginLeft: -24,
+    fontSize: 20
   }
 });
-
-// additional features -->  hide and show password
