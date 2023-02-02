@@ -40,7 +40,7 @@ const SettingScreen = ({navigation}) =>{
     // const [pic, setPic] = useState(thisAccount[0].profile_pic)
     // const [password, setPassword] = useState(thisAccount[0].password)
 
-    const signOutNow = () => {
+    const signOutNow = ({navigation}) => {
         signOut(auth)
           .then(() => {
             isLoggedIn = false

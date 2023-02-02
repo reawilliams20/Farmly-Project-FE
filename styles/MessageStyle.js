@@ -23,9 +23,9 @@ export const UserImgWrapper = styled.View`
 `;
 
 export const UserImg = styled.Image`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
+  width: 10%;
+  height: 10%;
+  border-radius: 10%;
 `;
 
 export const TextSection = styled.View`
@@ -48,13 +48,11 @@ export const UserInfoText = styled.View`
 export const UserName = styled.Text`
   font-size: 14px;
   font-weight: bold;
-  font-family: 'Lato-Regular';
 `;
 
 export const PostTime = styled.Text`
   font-size: 12px;
   color: #666;
-  font-family: 'Lato-Regular';
 `;
 
 export const MessageText = styled.Text`

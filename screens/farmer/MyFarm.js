@@ -9,8 +9,6 @@ const MyFarm = ({navigation}) => {
     const {user, isFirstLaunch} = useContext(UserContext)
     const [farm, setFarm ] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-    const [farmAdded, setFarmAdded] = useState(false)
-
     const [shouldShow, setShouldShow] = useState(false);
     const [newFarmName, setNewFarmName] = useState("");
     const [profile_pic, setProfilePic] = useState("");
@@ -23,6 +21,7 @@ const MyFarm = ({navigation}) => {
     const [isEditable, setIsEditable] = useState(false);
     const [name, setName] = useState(farm.name)
     const [newDescription, setNewDescription] = useState(farm.description)
+    const [farmAdded, setFarmAdded] = useState(false)
 
 
   if (isFirstLaunch == true) {
@@ -47,6 +46,7 @@ const MyFarm = ({navigation}) => {
       };
 
     setFarm(newFarm)
+
     postFarm(newFarm).then(() => {
         setFarmAdded(true)
     })
@@ -141,7 +141,7 @@ const MyFarm = ({navigation}) => {
         <Text>{farm[0].description}</Text>
       </View>
     )
-  } else {
+    } else {
     let myFarm = [];
     useEffect(() => {
       getFarms()
