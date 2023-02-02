@@ -72,12 +72,14 @@ const FarmerChat = ({navigation, route}) =>{
         onPress={()=>navigation.navigate('MessagesScreenForFarmers')}
         style= {styles.arrow} 
         >
-        <Text>⬅</Text>
+        <Text style= {styles.arrowText}>⬅</Text>
         </Pressable>
         <GiftedChat
+          scrollToBottom
           messages={renderMessages}
           onSend={(renderMessages) => onSend(renderMessages)}
           showAvatarForEveryMessage={true}
+          alwaysShowSend
           user={{
             _id:auth?.currentUser?.email,
             sent_to_customer_name: userName,
@@ -100,7 +102,10 @@ const styles= StyleSheet.create({
         backgroundColor:'#B6EBA6'
     },
     arrow:{
-      paddingTop: 40,
+      paddingTop: 70,
       paddingLeft: 20,
+    }, 
+    arrowText:{
+      fontSize: 30
     }
 })
