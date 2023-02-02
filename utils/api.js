@@ -97,3 +97,11 @@
       return response.data
     })
   }
+
+  export const patchFarmById = (farm_id, updateBody) => {
+    return farmlyApi.patch(`/farms/${farm_id}`, updateBody)
+    .then((response) => {
+      return response.data
+    })
+
+  }
