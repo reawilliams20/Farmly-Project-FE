@@ -16,9 +16,10 @@ const Routes = () => {
         setUser(user)
     });
   }, []);
+
   return (
     <NavigationContainer>
-      {(isLoggedIn && user) ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}
+      {(user&&isLoggedIn) ? (type!=="farmer" ?  <AppStackForCustomers/>: <AppStackForFarmers/>) : <AuthStack />}
     </NavigationContainer>
   );
 };

@@ -1,10 +1,12 @@
 import React, { useCallback, useContext,useLayoutEffect } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import { useEffect, useState } from "react";
 import { Bubble, GiftedChat, Send } from "react-native-gifted-chat";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import { auth, db } from "../../firebase";
 import { getFarmById } from "../../utils/api";
+// import Icon from '@mdi/react';
+// import { mdiArrowLeft } from '@mdi/js';
 import {
   collection,
   addDoc,
@@ -67,6 +69,9 @@ const FarmerChat = ({navigation, route}) =>{
 
     return (
         <>
+        <Pressable onPress={()=>navigation.navigate('MessagesScreenForFarmers')}>
+        <Text>⬅</Text>
+        </Pressable>
         <GiftedChat
           messages={renderMessages}
           onSend={(renderMessages) => onSend(renderMessages)}

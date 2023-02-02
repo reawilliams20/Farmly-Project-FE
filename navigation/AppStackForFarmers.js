@@ -98,27 +98,6 @@ const AppStack = () => {
         }}
       />
     </Tab.Navigator>
-
-
-
-  //   <Stack.Navigator>
-  //   <Stack.Screen name="ProduceList" component={ProduceTab} />
-  //   <Stack.Screen
-  //     name="FarmList"
-  //     options={{ title: "Home" }}
-  //     component={FarmsTab}
-  //   />
-  //   <Stack.Screen
-  //     name="SingleFarm"
-  //     options={{ title: "Single Farm" }}
-  //     component={SingleFarm}
-  //   />
-  //   <Stack.Screen
-  //     name="Settings"
-  //     options={{ title: "Settings" }}
-  //     component={ProduceTab}
-  //   />
-  // </Stack.Navigator>
   )
   
 };

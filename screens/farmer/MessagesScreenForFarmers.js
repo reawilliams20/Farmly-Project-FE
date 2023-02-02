@@ -97,7 +97,7 @@ const MessagesScreenForFarmers =({navigation})=>{
       ); 
 
     return (
-        <Container>
+        <Container style= {styles.area}>
         <FlatList
           data={unique}
           keyExtractor={(item) => item.id}
@@ -138,5 +138,12 @@ const styles= StyleSheet.create({
         alignItems:'center',
         justifyContent:'center',
         backgroundColor:'#8fcbbc'
-    }
+    },
+    area: {
+      padding: 60,
+      flex: 1,
+      alignItems: "center",
+      justifyContent: "center",
+      backgroundColor: "#8fcbbc",
+    },
 })

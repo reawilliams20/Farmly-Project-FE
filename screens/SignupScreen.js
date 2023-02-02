@@ -17,7 +17,7 @@ const SignUpScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
   const [avatar, setAvatar] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  let { type, setType, isFirstLaunch, setIsFirstLaunch } =
+  let { type, setType, isFirstLaunch, setIsFirstLaunch, isLoggedIn, setIsLoggedIn } =
     useContext(UserContext);
 
   let currSelectType = "";
@@ -40,6 +40,7 @@ const SignUpScreen = ({ navigation }) => {
     }
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        setIsLoggedIn(true)
         const user = userCredential.user;
         setIsFirstLaunch(true);
         updateProfile(auth.currentUser, {
@@ -72,6 +73,7 @@ const SignUpScreen = ({ navigation }) => {
      <ScrollView>
     
       <View style={styles.container}>
+      {/* <View> */}
         <Input
           style={styles.inputContainer}   
           placeholder="Enter your name"
