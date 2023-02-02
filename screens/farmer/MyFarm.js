@@ -213,7 +213,7 @@ const MyFarm = ({navigation}) => {
                 <Text style={styles.text}>{farm[0].address.county}</Text>
                 <Text style={styles.text}>{farm[0].address.postcode}</Text>
                 <Text style={styles.text}>{farm[0].address.country}</Text>
-                <TextInput multiline={true} numberOfLines={3} style={styles.input} placeholder={farm.description} editable={isEditable} onChangeText={description => setNewDescription(description)}>{farm[0].description}</TextInput>
+                <TextInput multiline={true} numberOfLines={3} style={styles.textinput} placeholder={farm.description} editable={isEditable} onChangeText={description => setNewDescription(description)}>{farm[0].description}</TextInput>
                 <Button title={isEditable ? 'Cancel': 'Edit'} onPress={(e) => editFarm(e)} />
                     {isEditable ? (<Button title="Save" onPress={updateFarm} />) :null }
           </View>
@@ -258,7 +258,8 @@ const styles= StyleSheet.create({
   textinput:{
     borderBottomColor: "grey",
     borderBottomWidth: 1,
-    marginBottom: 20
+    marginBottom: 20,
+    marginTop: 5
   },
   content: {
     color: "white",
